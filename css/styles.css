@@ -51,6 +51,7 @@ h3 {
     border: 1px solid green;
     background-color: rgba(0, 0, 0, 0.2);
     margin: 10px;
+    position: relative;
 }
 
 .video-pic {
@@ -71,4 +72,15 @@ h3 {
 .video-title {
     font-weight: bold;
     position: absolute;
+    top: 10px;
+    left: 125px;
+    height: 80px;
+    width: 205px;
+    text-overflow: ellipsis;
+}
+.video-likes {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
 }

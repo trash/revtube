@@ -8,9 +8,7 @@ var PlaylistItemComponent = React.createClass({
 	render: function () {
 		var playlistItem = this.props.playlistItem;
 		var videoPicStyle = {
-		  backgroundImage: 'url(' + playlistItem.get('videoThumbnail') + ')',
-		  WebkitTransition: 'all', // note the capital 'W' here
-		  msTransition: 'all' // 'ms' is the only lowercase vendor prefix
+		  backgroundImage: 'url("' + playlistItem.get('videoThumbnail') + '")'
 		};
 
 		return (
@@ -19,7 +17,7 @@ var PlaylistItemComponent = React.createClass({
 					<div className="video-duration">{ playlistItem.get('videoDuration') }</div>
 				</div>
 				<div className="video-title">{ playlistItem.get('videoTitle') }</div>
-				<div className="video-likes">{ playlistItem.get('likes') }</div>
+				<span className="video-likes glyphicon glyphicon-thumbs-up"> { playlistItem.get('likes') }</span>
 			</li>
 		);
 	}

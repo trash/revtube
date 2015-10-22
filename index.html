@@ -23,6 +23,7 @@
 
     </div>
     <div id="join-container">
+      <h3>Join and add</h3>
       <div id="qrcode"></div>
     </div>
   </div>
@@ -38,13 +39,12 @@
 
 
   <script type="text/javascript">
-  // $(document, function(){
       Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCmiKMmy0zRbYeMhGJ5YQFG6k');
 
       var qrcode = new QRCode("qrcode", {
           text: "http://jindo.dev.naver.com/collie",
-          width: 128,
-          height: 128,
+          width: 130,
+          height: 130,
           colorDark : "#000000",
           colorLight : "#ffffff",
           correctLevel : QRCode.CorrectLevel.H
@@ -52,14 +52,19 @@
 
       var tubular = $('#video-container').tubular({
         videoId: 'ZYw3exBXb4c',
-        mute: false,
-        repeat: false,
-        volumeUpClass: 'tubular-volume-up',
-        volumeDownClass: 'tubular-volume-down',
-        playButtonClass: 'tubular-play',
-        pauseButtonClass: 'tubular-pause'
+        mute: true,
+        repeat: true,
+        // volumeUpClass: 'tubular-volume-up',
+        // volumeDownClass: 'tubular-volume-down',
+        // playButtonClass: 'tubular-play',
+        // pauseButtonClass: 'tubular-pause'
       });
-  // })
+
+      $(window).keypress(function(e) {
+        if (e.keyCode === 0 || e.keyCode === 32) {
+          window.player.videoPause();
+        }
+      });
 
   </script>
 </body>

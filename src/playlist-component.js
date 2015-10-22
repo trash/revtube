@@ -33,32 +33,37 @@ var PlaylistComponent = React.createClass({
 		};
 	},
 	fetchPlaylistItems: function () {
-		var playlistQuery = new Parse.Query(Playlist);
+		var playlistQuery = new Parse.Query(Playlist),
+			component = this;
 		playlistQuery.get(this.props.playlistId, {
 			success: function (playlist) {
+				// async callback, component might unmount which causes this to break
+				if (!component.isMounted()) {
+					return;
+				}
 				var query = new Parse.Query(PlaylistItem);
 				query.equalTo('Playlist', playlist);
 				query.find({
 					success: function (playlistItems) {
 						console.log(playlistItems)
 						// The object was retrieved successfully.
-						this.setState({
+						component.setState({
 							playlistItems: playlistItems
 						});
-					}.bind(this),
+					},
 					error: function (object, error) {
 						// The object was not retrieved successfully.
 						// error is a Parse.Error with an error code and message.
 						console.error('Error fetching playlist items.', error);
 					}
 				});
-			}.bind(this),
+			},
 			error: function (object, error) {
 				console.error('Error fetching playlist object.', error);
 			}
 		});
 	},
-	componentWillMount: function () {
+	componentDidMount: function () {
 		this.fetchPlaylistItems();
 	},
 	render: function () {
@@ -67,7 +72,7 @@ var PlaylistComponent = React.createClass({
 			return <h3>Fetching playlist...</h3>;
 		}
 		return (
-			<ul className="list-unstyled" id="queue-list">
+			<ul className="list-unstyled playlist-container" id="queue-list">
 				{ playlistItems.map(function (playlistItem) {
 					return <PlaylistItemComponent key={ playlistItem.id } playlistItem={ playlistItem } />
 				}) }

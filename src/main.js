@@ -2,9 +2,7 @@ var ParseTestComponent = window.ParseTestComponent,
 	MainComponent = React.createClass({
 		render: function () {
 			return (
-				<div className="main">
-					<PlaylistComponent playlistId={ 'vxLtIafOqa' }/>
-				</div>
+				<window.SlideContainerComponent/>
 			);
 		}
 	}),

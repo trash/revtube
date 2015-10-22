@@ -1,57 +1,42 @@
 <!doctype html>
 <head>
-  <meta charset="utf-8">
 
-  <title>PartyTube</title>
-  <meta name="description" content="PartyTube">
-  <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+	<meta charset="utf-8">
+
+	<title>revtube</title>
+	<meta name="description" content="revtube">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+	<script src="vendor/react/react.js"></script>
+	<script src="vendor/react/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+	<script type="text/babel" src="src/main.js"></script>
 </head>
 
 <body>
 
-  <div id="main">
-    <h1>You're ready to use Parse!</h1>
+	<div id="main">
+		<h1>revtube</h1>
+		<p>sup</p>
+	</div>
 
-    <p>Read the documentation and start building your JavaScript app:</p>
+	<script type="text/javascript">
+		Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCmiKMmy0zRbYeMhGJ5YQFG6k');
 
-    <ul>
-      <li><a href="https://www.parse.com/docs/js_guide">Parse JavaScript Guide</a></li>
-      <li><a href="https://www.parse.com/docs/js">Parse JavaScript API Documentation</a></li>
-    </ul>
-
-    <div style="display:none" class="error">
-      Looks like there was a problem saving the test object. Make sure you've set your application ID and javascript key correctly in the call to <code>Parse.initialize</code> in this file.
-    </div>
-
-    <div style="display:none" class="success">
-      <p>We've also just created your first object using the following code:</p>
-
-        <code>
-          var TestObject = Parse.Object.extend("TestObject");<br/>
-          var testObject = new TestObject();<br/>
-          testObject.save({foo: "bar"});
-        </code>
-    </div>
-  </div>
-
-  <script type="text/javascript">
-    Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCmiKMmy0zRbYeMhGJ5YQFG6k');
-
-    var TestObject = Parse.Object.extend("TestObject");
-    var testObject = new TestObject();
-      testObject.save({foo: "bar"}, {
-      success: function(object) {
-        $(".success").show();
-      },
-      error: function(model, error) {
-        $(".error").show();
-      }
-    });
-  </script>
+		var TestObject = Parse.Object.extend("TestObject");
+		var testObject = new TestObject();
+			testObject.save({foo: "bar"}, {
+			success: function(object) {
+				$(".success").show();
+			},
+			error: function(model, error) {
+				$(".error").show();
+			}
+		});
+	</script>
 </body>
 
 </html>

@@ -1,0 +1,11 @@
+{
+  "name": "revtube",
+  "version": "0.0.0",
+  "dependencies": {
+    "ejs": "^2.3.4",
+    "express": "~3.4.3"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}

@@ -1,4 +1,17 @@
+var ParseTestComponent = window.ParseTestComponent,
+	MainComponent = React.createClass({
+		render: function () {
+			return (
+				<div className="main">
+					<h1>RevTube</h1>
+					<ParseTestComponent/>
+				</div>
+			);
+		}
+	}),
+	MainComponentFactory = React.createFactory(MainComponent);
+
 ReactDOM.render(
-  <h1>revtube</h1>,
+  new MainComponentFactory(),
   document.getElementById('main')
 );

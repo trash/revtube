@@ -3,7 +3,8 @@ var ParseTestComponent = window.ParseTestComponent,
 		render: function () {
 			return (
 				<div className="main">
-					<h1>RevTube</h1>
+				    <h3 className="masthead-brand">PartyTube</h3>
+                    <nav></nav>
 					<ParseTestComponent/>
 				</div>
 			);
@@ -12,6 +13,6 @@ var ParseTestComponent = window.ParseTestComponent,
 	MainComponentFactory = React.createFactory(MainComponent);
 
 ReactDOM.render(
-  new MainComponentFactory(),
+    new MainComponentFactory(),
   document.getElementById('main')
 );

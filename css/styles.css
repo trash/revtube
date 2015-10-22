@@ -1,40 +1,37 @@
 body {
-    background: #eee;
-    text-align: center;
-    padding: 0 25px;
+    background-color: black;
 }
 
-#main {
-    width: 500px;
-    margin: auto;
-    text-align: left;
-    background: white;
-    padding: 50px 60px;
-    border: solid #ddd;
-    border-width: 0 1px 1px 1px;
+#site-wrapper {
+    width: 100%;
+    height: 100%;
 }
 
-#main h1 {
-    margin-top: 0;
-    font-size: 35px;
-}
-
-#main ul {
-    padding-left: 20px;
-}
-
-#main .error {
+#join-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 10%;
+    width: 10%;
     border: 1px solid red;
-    background: #FDEFF0;
-    padding: 20px;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
-#main .success {
-    margin-top: 25px;
+#qrcode {
+    height: 90%;
+    width: 90%;
 }
 
-#main .success code {
-    font-size: 12px;
-    color: green;
-    line-height: 13px;
+#queue-container {
+    height: 100%;
+    width: 20%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: 1px solid green;
+}
+
+#queue-container ul {
+
 }

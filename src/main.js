@@ -9,6 +9,6 @@ var ParseTestComponent = window.ParseTestComponent,
 	MainComponentFactory = React.createFactory(MainComponent);
 
 ReactDOM.render(
-    new MainComponentFactory(),
+	new MainComponentFactory(),
   document.getElementById('main')
 );

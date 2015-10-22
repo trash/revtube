@@ -20,7 +20,7 @@ var SlideContainerComponent = React.createClass({
 					</button>
 				</div>
 				<div className="right">
-					Search and add videos here
+					<window.AddVideosComponent/>
 				</div>
 			</div>
 		);

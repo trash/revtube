@@ -27,6 +27,10 @@ h3 {
     width: 100%;
 }
 
+input[disabled] {
+    background: #666 !important;
+}
+
 .site-wrapper {
     width: 100%;
     height: 100%;
@@ -55,13 +59,12 @@ h3 {
     right: -500px;
     top: 0;
     background-color: rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    transition: right 250ms ease-in-out;
 }
 
 #queue-container h3 {
     margin: 10px;
     border: 1px solid green;
-    transition: right 250ms ease-in-out;
 }
 .slide-container.slide-left {
     right: 0;
@@ -98,6 +101,10 @@ h3 {
     width: 90%;
     padding: 16px;
     background: #0af;
+}
+
+.add-videos-container {
+    padding: 8px;
 }
 
 .slide-container .right {

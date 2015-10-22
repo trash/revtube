@@ -17,6 +17,8 @@
 
 <body>
   <div class="site-wrapper" id="video-container">
+    <span id="title"></span>
+    <span id="author"></span>
     <div id="main"></div>
     <div id="join-container">
       <h3>Join and add</h3>
@@ -45,21 +47,52 @@
           correctLevel : QRCode.CorrectLevel.H
       });
 
-      var tubular = $('#video-container').tubular({
-        videoId: 'ZYw3exBXb4c',
-        mute: true,
-        repeat: true,
-        // volumeUpClass: 'tubular-volume-up',
-        // volumeDownClass: 'tubular-volume-down',
-        // playButtonClass: 'tubular-play',
-        // pauseButtonClass: 'tubular-pause'
-      });
+      function showVideoInfo(){
+        var title = window.player.B.videoData.title;
+        var author = window.player.B.videoData.author;
+        $("#title").text(title);
+        $("#author").text(author);
+      }
 
-      $(window).keypress(function(e) {
-        if (e.keyCode === 0 || e.keyCode === 32) {
-          window.player.pauseVideo();
+      function initPlayer(videoId) {
+        $('#video-container').tubular({
+          videoId: videoId,
+          mute: true,
+          repeat: true
+        });
+
+        var oldOnPlayerReady = window.onPlayerReady;
+
+        window.onPlayerReady = function(e) {
+          oldOnPlayerReady(e);
+
+          $(window).keypress(function(e) {
+            if (e.keyCode === 0 || e.keyCode === 32) {
+              if (window.player.B.playerState == 1)
+                window.player.pauseVideo();
+              else if (window.player.B.playerState == 2)
+                window.player.playVideo();
+            }
+          });
+
         }
-      });
+
+        var oldOnPlayerStateChange = window.onPlayerStateChange;
+
+        window.onPlayerStateChange = function (event) {
+          oldOnPlayerStateChange(event);
+          showVideoInfo();
+        }
+      }
+
+      window.playNext = function(videoId) {
+        if (window.player === undefined)
+          initPlayer(videoId);
+        else
+          window.player.loadVideoById(videoId);
+      }
+
+      window.playNext('ZYw3exBXb4c');
 
   </script>
 </body>

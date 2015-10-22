@@ -5,7 +5,7 @@ var ParseTestComponent = window.ParseTestComponent,
 				<div className="main">
 				    <h3 className="masthead-brand">PartyTube</h3>
                     <nav></nav>
-					<ParseTestComponent/>
+					<PlaylistComponent playlistId={ 'vxLtIafOqa' }/>
 				</div>
 			);
 		}

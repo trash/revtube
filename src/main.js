@@ -1,42 +1,20 @@
 var Playlist = Parse.Object.extend('Playlist')
 
-// Helper function for parsing url params, copied from stackoverflow
-function GetQueryParams() {
-	var query_string = {};
-	var query = window.location.search.substring(1);
-	var vars = query.split("&");
-	for (var i=0;i<vars.length;i++) {
-		var pair = vars[i].split("=");
-		// If first entry with this name
-		if (typeof query_string[pair[0]] === "undefined") {
-			query_string[pair[0]] = decodeURIComponent(pair[1]);
-		// If second entry with this name
-		} else if (typeof query_string[pair[0]] === "string") {
-			var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
-			query_string[pair[0]] = arr;
-		// If third or later entry with this name
-		} else {
-			query_string[pair[0]].push(decodeURIComponent(pair[1]));
-		}
-	} 
-	return query_string;
-}
-
 var ParseTestComponent = window.ParseTestComponent,
 	MainComponent = React.createClass({
 		getInitialState: function() {
-			var params = GetQueryParams();
-			if (params['party_code'] === undefined) {
+			var partyCode = window.location.hash.substr(1);
+			if (partyCode === "") {
 				return {
 					init: false,
 					playlistId: 'you should never be loading this',
 					defaultUsername: '',
 				};
 			} else {
-				console.log(params['party_code'])
+				console.log(partyCode)
 				return {
 					init: true,
-					playlistId: params['party_code'],
+					playlistId: partyCode,
 					defaultUsername: '',
 				}
 			}
@@ -76,7 +54,7 @@ var ParseTestComponent = window.ParseTestComponent,
 					</button>
 
 					<h3 id="init-existing-party"> Join an existing party </h3>
-					<input type='text' name='existing-playlist-id' id='existing-playlist-id' 
+					<input type='text' name='existing-playlist-id' id='existing-playlist-id'
 						className='form-control' />
 					<button className='btn init-button'
 						onClick={this.existingPlaylist}> Join
@@ -108,6 +86,7 @@ var ParseTestComponent = window.ParseTestComponent,
 				init: true,
 				playlistId: playlistId,
 			});
+			window.location.hash = playlistId;
 		},
 	}),
 	MainComponentFactory = React.createFactory(MainComponent);

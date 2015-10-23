@@ -1,5 +1,3 @@
-var root_url = 'http://localhost:8000';
-
 var SlideContainerComponent = React.createClass({
 	propTypes: {
 		playlistId: React.PropTypes.string,
@@ -18,18 +16,7 @@ var SlideContainerComponent = React.createClass({
 		events.on('slide-left', this.slideLeft);
 	},
 	render: function () {
-		// Also update the qr code when this is rendered.
-		var party_url = root_url + "?party_code=" + this.props.playlistId + "&/";
-		$('#join-link').html(party_url);
-		var qrcode = new QRCode("qrcode", {
-			text: party_url,
-			width: 130,
-			height: 130,
-			colorDark : "#000000",
-			colorLight : "#ffffff",
-			correctLevel : QRCode.CorrectLevel.H
-		});
-		$('#join-container').css('visibility', 'visible');
+		this.renderQrCode();
 
 		return (
 			<div className={ 'slide-container ' + (this.state.slideLeft ? 'slide-left' : '') }>
@@ -44,6 +31,29 @@ var SlideContainerComponent = React.createClass({
 				</div>
 			</div>
 		);
+	},
+	renderQrCode: function() {
+		// Also update the qr code when this is rendered.
+		var party_url = window.location;
+		$('#join-link').text(party_url);
+		$('#qrcode').html(''); // clean up the previous one
+
+		// var qrcode = new QRCode("qrcode", {
+		// 	text: party_url,
+		// 	width: 130,
+		// 	height: 130,
+		// 	colorDark : "#000000",
+		// 	colorLight : "#ffffff",
+		// 	correctLevel : QRCode.CorrectLevel.H
+		// });
+
+		$('#qrcode').qrcode({
+			render: 'canvas',
+			size: 130,
+			text: party_url
+		});
+
+		$('#join-container').css('visibility', 'visible');
 	}
 });
 

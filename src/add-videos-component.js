@@ -53,7 +53,7 @@ var AddVideosComponent = React.createClass({
 				title: video.snippet.title,
 				description: video.snippet.description,
 				thumbnail: video.snippet.thumbnails.medium.url
-			}
+			};
 		});
 		this.setState({
 			searchResults: videos

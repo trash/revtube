@@ -23,7 +23,7 @@ function play_sound(url){
     }
 }
 function readme(txt){
-    play_sound("http://localhost:9000/api/tts?text="+encodeURIComponent(txt));
+    play_sound("/api/tts?text="+encodeURIComponent(txt));
     // play_sound("http://www.voicerss.org/controls/speech.ashx?hl=en-us&c=mp3&src="+encodeURIComponent(txt));
 }
 

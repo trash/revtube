@@ -66,10 +66,6 @@ input[disabled] {
     transition: right 250ms ease-in-out;
 }
 
-#queue-container h3 {
-    margin: 10px;
-    border: 1px solid green;
-}
 .slide-container.slide-left {
     right: 0;
 }
@@ -91,7 +87,7 @@ ul {
 }
 
 .slide-container .left h3 {
-    padding: 0.25em;
+    margin: 20px 0 10px 10px;
 }
 .playlist-container {
     top: 152px;
@@ -207,15 +203,6 @@ ul {
     width: 120px;
     background-color: black;
     position: relative;
-}
-.video-duration {
-    background-color: black;
-    font-weight: bold;
-    font-size: 10px;
-    position: absolute;
-    bottom: 4px;
-    right: 4px;
-    padding: 2px;
 }
 .video-title {
     font-weight: bold;

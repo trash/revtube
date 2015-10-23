@@ -17,9 +17,7 @@ var PlaylistItemComponent = React.createClass({
 
 		return (
 			<li>
-				<div className="video-pic" style={videoPicStyle}>
-					<div className="video-duration">{ playlistItem.get('videoDuration') }</div>
-				</div>
+				<div className="video-pic" style={videoPicStyle}></div>
 				<div className="video-title">{ playlistItem.get('videoTitle') }</div>
 				<span className="video-likes glyphicon glyphicon-thumbs-up"> { playlistItem.get('likes') }</span>
 				{ this.props.noVoteButton ? false :
@@ -55,6 +53,8 @@ var PlaylistComponent = React.createClass({
 
 				var query = new Parse.Query(PlaylistItem);
 				query.equalTo('Playlist', playlist);
+				query.descending("likes");
+				query.ascending("createdAt");
 				query.find({
 					success: function (playlistItems) {
 						console.log(playlistItems)
@@ -85,6 +85,7 @@ var PlaylistComponent = React.createClass({
 		playlistItem.set('videoTitle', video.title);
 		playlistItem.set('videoThumbnail', video.thumbnail);
 		playlistItem.set('Playlist', this.playlist);
+		playlistItem.set('likes', 1);
 
 		playlistItem.save(null, {
 			success: function () {
@@ -186,9 +187,11 @@ var PlaylistComponent = React.createClass({
 		}
 		return (
 			<div>
+				<ul className="list-unstyled">
 				<PlaylistItemComponent key={ playlistItems[0].id }
 					noVoteButton={ true }
 					playlistItem={ playlistItems[0] } />
+				</ul>
 				<h3>Up Next</h3>
 				<ul className="list-unstyled playlist-container" id="queue-list">
 					{ playlistItems.slice(1, playlistItems.length).map(function (playlistItem) {

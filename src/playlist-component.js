@@ -41,6 +41,8 @@ var PlaylistComponent = React.createClass({
 				if (!component.isMounted()) {
 					return;
 				}
+				component.playlist = playlist;
+
 				var query = new Parse.Query(PlaylistItem);
 				query.equalTo('Playlist', playlist);
 				query.find({
@@ -64,9 +66,31 @@ var PlaylistComponent = React.createClass({
 			}
 		});
 	},
+	addVideo: function (video) {
+		var playlistItem = new PlaylistItem();
+
+		playlistItem.set('videoId', video.id);
+		playlistItem.set('videoTitle', video.title);
+		playlistItem.set('videoThumbnail', video.thumbnail);
+		playlistItem.set('Playlist', this.playlist);
+
+		playlistItem.save(null, {
+			success: function () {
+				events.emit('playlist-update');
+			},
+			error: function (playlistItem, error) {
+				// Execute any logic that should take place if the save fails.
+				// error is a Parse.Error with an error code and message.
+				console.error('Failed to create new object, with error code: ' + error.message);
+			}
+		});
+	},
 	componentDidMount: function () {
 		this.fetchPlaylistItems();
 		window.playlist = this;
+	},
+	componentWillMount: function () {
+		events.on('add-video', this.addVideo);
 	},
 	// playNext: function () {
 	// 	var current = this.state.playlistItems.shift();

@@ -1,8 +1,24 @@
+var SearchVideoResult = React.createClass({
+	propTypes: {
+		video: React.PropTypes.object.isRequired
+	},
+	render: function () {
+		var video = this.props.video;
+		return (
+			<li className="search-video-result" style={ { 'backgroundImage': 'url(' + video.thumbnail + ')' } } key={ video.id }>
+				<span>{ video.title }</span>
+				<button onClick={ this.props.addVideo(video) }>
+					<i className="glyphicon glyphicon-plus"></i>
+				</button>
+			</li>
+		);
+	}
+});
+
 var AddVideosComponent = React.createClass({
 	getInitialState: function () {
 		return {
 			searchValue: '',
-			disabled: !window.youtubeApiReady,
 			searchResults: []
 		};
 	},
@@ -15,14 +31,20 @@ var AddVideosComponent = React.createClass({
 		this.queryYoutube();
 	},
 	queryYoutube: _.debounce(function () {
-		var request = gapi.client.youtube.search.list({
-			q: this.state.searchValue,
-			part: 'snippet',
-			maxResults: 10
+		$.ajax({
+			type: 'get',
+			url: 'https://content.googleapis.com/youtube/v3/search',
+			data: {
+				part: 'snippet',
+				q: this.state.searchValue,
+				key: 'AIzaSyBqf7fU8HgDmRG752sxL1eoff5rSJVIEKk',
+				maxResults: 10
+			},
+			success: function (response) {
+				console.log(response);
+				this.updateResults(response.items);
+			}.bind(this)
 		});
-		request.execute(function (response) {
-			this.updateResults(response.items);
-		}.bind(this));
 	}, 250),
 	updateResults: function (videos) {
 		videos = videos.map(function (video) {
@@ -30,12 +52,20 @@ var AddVideosComponent = React.createClass({
 				id: video.id.videoId,
 				title: video.snippet.title,
 				description: video.snippet.description,
-				thumbnail: video.snippet.thumbnails.default.url
+				thumbnail: video.snippet.thumbnails.medium.url
 			}
 		});
 		this.setState({
 			searchResults: videos
 		});
+	},
+	addVideo: function (video) {
+		return function () {
+			events.emit('add-video', video);
+		};
+	},
+	componentDidMount: function () {
+		this.queryYoutube();
 	},
 	componentWillMount: function () {
 		events.on('youtube-api-ready', function () {
@@ -56,8 +86,10 @@ var AddVideosComponent = React.createClass({
 					placeholder="Search for videos..."/>
 				<ul>
 					{ searchResults.map(function (video) {
-						return <li key={ video.id }>{ video.title }</li>
-					}) }
+						return <SearchVideoResult key={ video.id }
+							addVideo={ this.addVideo }
+							video={ video }/>
+					}.bind(this)) }
 				</ul>
 			</div>
 		);

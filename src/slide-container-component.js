@@ -6,7 +6,8 @@ var SlideContainerComponent = React.createClass({
 	},
 	getInitialState: function () {
 		return {
-			slideLeft: false
+			slideLeft: false,
+			hide: true,	// slideLeft and hide shouldn't both be true.
 		};
 	},
 	slideLeft: function () {
@@ -17,9 +18,22 @@ var SlideContainerComponent = React.createClass({
 	componentWillMount: function () {
 		events.on('slide-left', this.slideLeft);
 	},
+	hide: function () {
+		this.setState({
+			hide: true,
+		});
+	},
+	unhide: function () {
+		this.setState({
+			hide: false,
+		});
+	},
 	render: function () {
 		return (
-			<div className={ 'slide-container ' + (this.state.slideLeft ? 'slide-left' : '') }>
+			<div className={ 'slide-container ' + (this.state.slideLeft ? 'slide-left' : '') +
+				(this.state.hide ? ' slide-hidden' : '' ) }
+				onMouseOver={ this.unhide }
+				onMouseOut={ this.hide }>
 				<div className="left">
 					<window.PlaylistComponent playlistId={ this.props.playlistId }/>
 					<button className="btn add-video-button" onClick={ this.slideLeft }>

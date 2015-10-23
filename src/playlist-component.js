@@ -121,8 +121,6 @@ var PlaylistComponent = React.createClass({
 		var query = new Parse.Query(PlaylistItem);
 		query.get(video.id, {
 			success: function (playlistItem) {
-				voted[playlistItem.id] = true;
-
 				// 1000 extra likes ensures we're keeping this item at the top of the list.
 				// This is a hacky way instead of keeping a pointer to current.
 				var currentLikes = playlistItem.get('likes') || 0,
@@ -148,13 +146,19 @@ var PlaylistComponent = React.createClass({
 	},
 	voteVideo: function (video) {
 		return function () {
-			var query = new Parse.Query(PlaylistItem);
+			// Add vote if it's not already been voted on
+			var positiveVote = !(video.id in voted),
+				query = new Parse.Query(PlaylistItem);
 			query.get(video.id, {
 				success: function (playlistItem) {
-					voted[playlistItem.id] = true;
+					if (positiveVote) {
+						voted[playlistItem.id] = true;
+					} else {
+						delete voted[playlistItem.id];
+					}
 
 					var currentLikes = playlistItem.get('likes') || 0,
-						newLikes = currentLikes + 1;
+						newLikes = currentLikes + (positiveVote ? 1 : -1);
 					playlistItem.set('likes', newLikes);
 					playlistItem.save();
 

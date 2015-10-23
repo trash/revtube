@@ -1,14 +1,5 @@
       Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCmiKMmy0zRbYeMhGJ5YQFG6k');
 
-      var qrcode = new QRCode("qrcode", {
-          text: "http://localhost:9000/",
-          width: 130,
-          height: 130,
-          colorDark : "#000000",
-          colorLight : "#ffffff",
-          correctLevel : QRCode.CorrectLevel.H
-      });
-
       window.initPlayer = function(videoId) {
         $('#video-container').tubular({
           videoId: videoId,

@@ -32,7 +32,8 @@ var PlaylistComponent = React.createClass({
 			playlistItems: null
 		};
 	},
-	fetchPlaylistItems: function () {
+	fetchPlaylistItems: function (playNext) {
+		console.log('fetch playlist');
 		var playlistQuery = new Parse.Query(Playlist),
 			component = this;
 		playlistQuery.get(this.props.playlistId, {
@@ -52,7 +53,9 @@ var PlaylistComponent = React.createClass({
 						component.setState({
 							playlistItems: playlistItems
 						});
-						window.playNext();
+						if (playNext) {
+							window.playNext();
+						}
 					},
 					error: function (object, error) {
 						// The object was not retrieved successfully.
@@ -87,11 +90,12 @@ var PlaylistComponent = React.createClass({
 		});
 	},
 	componentDidMount: function () {
-		this.fetchPlaylistItems();
+		this.fetchPlaylistItems(true);
 		window.playlist = this;
 	},
 	componentWillMount: function () {
 		events.on('add-video', this.addVideo);
+		setInterval(this.fetchPlaylistItems, 10000);
 	},
 	// playNext: function () {
 	// 	var current = this.state.playlistItems.shift();

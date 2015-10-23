@@ -62,8 +62,7 @@ var PlaylistComponent = React.createClass({
 						component.setState({
 							playlistItems: playlistItems
 						});
-						if (playNext) {
-							debugger;
+						if (playNext === true) {
 							window.playNext();
 						}
 					},
@@ -112,6 +111,24 @@ var PlaylistComponent = React.createClass({
 			window.playNext();
 		}
 	},
+	markAsCurrent: function (video) {
+		var query = new Parse.Query(PlaylistItem);
+		query.get(video.id, {
+			success: function (playlistItem) {
+				voted[playlistItem.id] = true;
+
+				// 1000 extra likes ensures we're keeping this item at the top of the list.
+				// This is a hacky way instead of keeping a pointer to current.
+				var currentLikes = playlistItem.get('likes') || 0,
+					extraLikesForCurrent = 1000,
+					newLikes = currentLikes < extraLikesForCurrent
+						? currentLikes + extraLikesForCurrent
+						: currentLikes;
+				playlistItem.set('likes', newLikes);
+				playlistItem.save();
+			}.bind(this)
+		});
+	},
 	updatePlaylistItemLikes: function (id, likes) {
 		// this is inefficient but eh im tired and lazy
 		var playlistItems = this.state.playlistItems,
@@ -142,12 +159,16 @@ var PlaylistComponent = React.createClass({
 	},
 	removeVideo: function (id) {
 		// Get the video then destroy it on db
+		var self = this;
 		var query = new Parse.Query(PlaylistItem);
 		query.get(id, {
 			success: function (video) {
 				console.log('destroy dat ish');
-				video.destroy();
-				this.fetchPlaylistItems(true);
+				video.destroy({
+					success: function(){
+						self.fetchPlaylistItems(true);
+					}
+				});
 			}
 		});
 

@@ -91,9 +91,7 @@
           oldOnPlayerStateChange(event);
           if (window.player.B.playerState == 0) { // stopped
             var topVideo = window.playlist.getTopVideo();
-            window.playlist.removeVideo(topVideo.id, function () {
-              window.playNext();
-            });
+            window.playlist.removeVideo(topVideo.id);
           }
           else if (window.player.B.playerState == 1) // playing
             showVideoInfo();
@@ -108,6 +106,7 @@
           return;
         }
         currentVideoId = currentVideo.get('videoId');
+        window.playlist.markAsCurrent(currentVideo);
 
         if (window.player === undefined) {
           window.initPlayer(currentVideoId);
@@ -116,24 +115,6 @@
         else {
           window.player.loadVideoById(currentVideoId);
         }
-
-        // // Wait a second then begin the check to see if the video has ended
-        // setTimeout(function () {
-        //   // Hacky check to see if video has ended
-        //   var checkEnded = setInterval(function () {
-        //     if (!window.player || !window.player.getDuration) {
-        //       return;
-        //     }
-        //     console.log(window.player.getCurrentTime(), window.player.getDuration());
-        //     // 0.1 from end
-        //     if (window.player.getDuration() > 0 && window.player.getDuration() - window.player.getCurrentTime() - 0.1 < 0) {
-        //       events.emit('video-ended');
-        //       window.playlist.removeVideo(window.playlist.nextVideo().id);
-        //       window.playNext();
-        //       clearInterval(checkEnded);
-        //     }
-        //   }, 100);
-        // }, 1000);
       }
 
 

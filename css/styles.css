@@ -93,7 +93,7 @@ ul {
     top: 152px;
     bottom: 100px;
     width: 100%;
-    overflow: scroll;
+    overflow: hidden;
     position: absolute;
 }
 .add-video-button {

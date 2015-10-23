@@ -13,6 +13,24 @@ h3 {
     overflow: hidden;
 }
 
+#init {
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+#init > h3 {
+    padding-top: 20px;
+}
+
+.init-button {
+    color: #555;
+    margin-left: 10px;
+}
+
+.init-button:hover {
+    color: #000;
+}
+
 #title {
     position: absolute;
     top: 10px;

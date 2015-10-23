@@ -6,7 +6,7 @@
 |* since 2010
 |* licensed under the MIT License
 |* Enjoy.
-|* 
+|*
 |* Thanks,
 |* Sean */
 
@@ -16,7 +16,7 @@
 
     // kill for mobile devices
     var deviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    
+
     // defaults
     var defaults = {
         ratio: 16/9, // usually either 4/3 or 16/9 -- tweak as needed
@@ -143,7 +143,7 @@
     $.fn.tubular = function (options) {
         return this.each(function () {
             if (!$.data(this, 'tubular_instantiated')) { // let's only run one
-                $.data(this, 'tubular_instantiated', 
+                $.data(this, 'tubular_instantiated',
                 tubular(this, options));
             }
         });

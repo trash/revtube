@@ -50,7 +50,7 @@ var PlaylistComponent = React.createClass({
 						component.setState({
 							playlistItems: playlistItems
 						});
-      					window.playlist.playNext();
+						window.playNext();
 					},
 					error: function (object, error) {
 						// The object was not retrieved successfully.
@@ -68,13 +68,13 @@ var PlaylistComponent = React.createClass({
 		this.fetchPlaylistItems();
 		window.playlist = this;
 	},
-	playNext: function () {
-		var current = this.state.playlistItems.shift();
-		window.playNext(current.get('videoId'));
-		this.setState({
-			playlistItems: this.state.playlistItems
-		});
-	},
+	// playNext: function () {
+	// 	var current = this.state.playlistItems.shift();
+	// 	window.playNext(current.get('videoId'));
+	// 	this.setState({
+	// 		playlistItems: this.state.playlistItems
+	// 	});
+	// },
 	render: function () {
 		var playlistItems = this.state.playlistItems;
 		if (!playlistItems) {

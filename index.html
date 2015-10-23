@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/styles.css">
-  <script src="vendor/react/react.js"></script>
-  <script src="vendor/react/react-dom.js"></script>
-    <!-- React components -->
-  <script type="text/babel" src="src/add-videos-component.js"></script>
-  <script type="text/babel" src="src/playlist-component.js"></script>
-  <script type="text/babel" src="src/slide-container-component.js"></script>
-  <!-- Main React entry point -->
-  <script type="text/babel" src="src/main.js"></script>
-
 </head>
 
 <body>
@@ -25,21 +16,31 @@
     </div>
   </div>
 
+
+
   <script src="vendor/eventemitter2.js"></script>
   <script type="text/javascript">
     var events = new window.EventEmitter2();
   </script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="scripts/jquery.tubular.1.0.js"></script>
+
   <script src="vendor/lodash.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="http://www.parsecdn.com/js/parse-latest.js"></script>
   <script src="scripts/qrcode.min.js"></script>
   <script src="vendor/browser.min.js"></script>
-  <script src="scripts/jquery.tubular.1.0.js"></script>
+
+  <script src="vendor/react/react.js"></script>
+  <script src="vendor/react/react-dom.js"></script>
+    <!-- React components -->
+  <script type="text/babel" src="src/add-videos-component.js"></script>
+  <script type="text/babel" src="src/playlist-component.js"></script>
+  <script type="text/babel" src="src/slide-container-component.js"></script>
+  <!-- Main React entry point -->
+  <script type="text/babel" src="src/main.js"></script>
+
   <script type="text/javascript">
-    events.on('youtube-api-ready', function () {
-      window.youtubeApiReady = true;
-    });
 
     // COPIED FROM: https://github.com/youtube/api-samples/blob/master/javascript/auth.js
 
@@ -121,9 +122,9 @@
 
       window.initPlayer = function(videoId) {
         $('#video-container').tubular({
-          videoId: 'jpe-LKn-4gM',
+          videoId: videoId,
           mute: true,
-          repeat: true
+          repeat: false
         });
 
         var oldOnPlayerReady = window.onPlayerReady;
@@ -145,16 +146,22 @@
 
         window.onPlayerStateChange = function (event) {
           oldOnPlayerStateChange(event);
-
           showVideoInfo();
         }
       }
 
-      window.playNext = function(videoId) {
-        if (window.player === undefined)
-          window.initPlayer(videoId);
-        else {
+      window.playNext = function() {
+        var current = window.playlist.state.playlistItems.shift();
+        var videoId = current.get('videoId');
+        window.playlist.setState({
+          playlistItems: window.playlist.state.playlistItems
+        });
 
+        if (window.player === undefined) {
+          window.initPlayer(videoId);
+          window.onYouTubeIframeAPIReady();
+        }
+        else {
           window.player.loadVideoById(videoId);
         }
       }

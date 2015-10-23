@@ -197,7 +197,7 @@ var PlaylistComponent = React.createClass({
 		}
 		return (
 			<div>
-				<ul className="list-unstyled">
+				<ul className="list-unstyled" id="current-list">
 				<PlaylistItemComponent key={ playlistItems[0].id }
 					noVoteButton={ true }
 					playlistItem={ playlistItems[0] } />

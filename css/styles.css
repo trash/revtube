@@ -190,16 +190,16 @@ ul {
     background: #0af;
 }
 
-li {
-    list-style: none;
-}
-
-#queue-list li {
+#queue-list li, #current-list li {
     height: 90px;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.2);
     position: relative;
     margin: 0 0 10px 0;
+}
+
+#current-list li .video-likes {
+    display: none;
 }
 
 .video-pic {

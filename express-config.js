@@ -29,7 +29,7 @@ module.exports = function(app) {
 	app.configure('production', function(){
 		app.use(express.favicon(path.join(rootPath, 'public', 'favicon.ico')));
 		app.use(express.static(path.join(rootPath, 'public')));
-		app.set('views', rootPath + '/views');
+		app.set('views', '/');
 	});
 
 	app.configure(function(){

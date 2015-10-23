@@ -31,7 +31,7 @@ h3 {
     width: 100%;
 }
 
-input[disabled] {
+input {
     background: #666 !important;
 }
 

@@ -43,12 +43,14 @@ var PlaylistComponent = React.createClass({
 		console.log('fetch playlist');
 		var playlistQuery = new Parse.Query(Playlist),
 			component = this;
-		playlistQuery.get(this.props.playlistId, {
-			success: function (playlist) {
+		playlistQuery.equalTo('code', this.props.playlistId);
+		playlistQuery.find({
+			success: function (playlists) {
 				// async callback, component might unmount which causes this to break
 				if (!component.isMounted()) {
 					return;
 				}
+				var playlist = playlists[0];
 				component.playlist = playlist;
 
 				var query = new Parse.Query(PlaylistItem);

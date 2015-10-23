@@ -49,7 +49,7 @@ var SlideContainerComponent = React.createClass({
 	renderQrCode: function() {
 		// Also update the qr code when this is rendered.
 		var party_url = window.location;
-		$('#join-link').text(party_url);
+		$('#join-link').text(this.props.playlistId);
 		$('#qrcode').html(''); // clean up the previous one
 
 		$('#qrcode').qrcode({

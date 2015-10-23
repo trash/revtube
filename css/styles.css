@@ -86,7 +86,7 @@ h3 {
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.4);
-    height: 230px;
+    height: 250px;
     width: 200px;
     visibility: hidden;
 }
@@ -156,7 +156,7 @@ ul {
 }
 
 .add-videos-container {
-    padding: 8px;
+    padding: 8px 0;
     height: 100%;
     position: relative;
 }
@@ -167,12 +167,15 @@ ul {
     top: 54px;
     bottom: 0;
     width: 100%;
+    padding: 0 8px;
 }
 
 .add-videos-container input {
     font-size: 18px;
     padding: 18px 12px;
     border-radius: 0;
+    width: calc(100% - 16px);
+    margin: auto;
 }
 
 .search-video-result {

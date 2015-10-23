@@ -23,4 +23,8 @@
 		background: #0af;
 		border: 0
 	}
+	#main {
+		width: 100%;
+		overflow: hidden;
+	}
 }

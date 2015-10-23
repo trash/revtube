@@ -14,8 +14,13 @@ h3 {
 }
 
 #init {
-    padding-top: 20px;
-    padding-left: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    text-align: center;
 }
 
 #init > h3 {
@@ -47,10 +52,6 @@ h3 {
 #main {
     height: 100%;
     width: 100%;
-}
-
-input {
-    background: #666 !important;
 }
 
 .site-wrapper {

@@ -64,10 +64,11 @@ var ParseTestComponent = window.ParseTestComponent,
 			} else {
 				var playlistName = "testing with spaces";
 				return (
-					<div id='init'>
+					<div id='init' className='form-inline'>
 					<h1 id='init-title'> Welcome to PartyTube </h1>
 					<h3 id="init-new-party"> Create a new party </h3>
 					<input type='text' name='new-playlist-id' id='new-playlist-id'
+						className='form-control'
 						value={this.state.defaultUsername}
 						onChange={this.handleChange} />
 					<button className='btn init-button' onClick={this.newPlaylist}>
@@ -75,7 +76,8 @@ var ParseTestComponent = window.ParseTestComponent,
 					</button>
 
 					<h3 id="init-existing-party"> Join an existing party </h3>
-					<input type='text' name='existing-playlist-id' id='existing-playlist-id' />
+					<input type='text' name='existing-playlist-id' id='existing-playlist-id' 
+						className='form-control' />
 					<button className='btn init-button'
 						onClick={this.existingPlaylist}> Join
 					</button>

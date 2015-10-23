@@ -72,7 +72,9 @@ window.playNext = function() {
 document.addEventListener('keyup', function (event) {
     if (event.keyCode === 39) {
         var currentVideo = window.playlist.getTopVideo();
-        if (!currentVideo) {
+        // If no video, don't skip
+        // also don't skip if they're just moving arrow key in input element
+        if (!currentVideo || e.target.nodeName === 'INPUT') {
             return;
         }
         window.playlist.removeVideo(currentVideo.id);

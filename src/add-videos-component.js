@@ -36,6 +36,7 @@ var AddVideosComponent = React.createClass({
 			url: 'https://content.googleapis.com/youtube/v3/search',
 			data: {
 				part: 'snippet',
+				type: 'video',
 				q: this.state.searchValue,
 				key: 'AIzaSyBqf7fU8HgDmRG752sxL1eoff5rSJVIEKk',
 				maxResults: 10
@@ -64,6 +65,9 @@ var AddVideosComponent = React.createClass({
 			events.emit('add-video', video);
 		};
 	},
+	goBack: function () {
+		events.emit('slide-left');
+	},
 	componentDidMount: function () {
 		this.queryYoutube();
 	},
@@ -91,6 +95,9 @@ var AddVideosComponent = React.createClass({
 							video={ video }/>
 					}.bind(this)) }
 				</ul>
+				<button onClick={ this.goBack } className="add-videos-go-back">
+					<i className="glyphicon glyphicon-chevron-left"/>
+				</button>
 			</div>
 		);
 	}

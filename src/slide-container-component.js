@@ -11,6 +11,9 @@ var SlideContainerComponent = React.createClass({
 			slideLeft: !this.state.slideLeft
 		});
 	},
+	componentWillMount: function () {
+		events.on('slide-left', this.slideLeft);
+	},
 	render: function () {
 		return (
 			<div className={ 'slide-container ' + (this.state.slideLeft ? 'slide-left' : '') }>

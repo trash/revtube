@@ -105,7 +105,7 @@ ul {
     top: 152px;
     bottom: 100px;
     width: 100%;
-    overflow: hidden;
+    overflow: scroll;
     position: absolute;
 }
 .add-video-button {
@@ -234,4 +234,7 @@ ul {
     top: 10px;
     left: 10px;
     background-color: rgba(0, 0, 0, 0.4);
+}
+.add-videos-go-back {
+    display: none;
 }

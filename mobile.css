@@ -1,0 +1,6 @@
+@media (max-width: 768px) {
+	.slide-container {
+		width: 200%;
+		right: -100%;
+	}
+}

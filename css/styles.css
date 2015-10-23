@@ -126,6 +126,11 @@ ul {
     width: 100%;
     overflow: scroll;
     position: absolute;
+
+}
+
+*::-webkit-scrollbar {
+    display: none;
 }
 .add-video-button {
     border-radius: 0;

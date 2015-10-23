@@ -53,8 +53,8 @@ var PlaylistComponent = React.createClass({
 
 				var query = new Parse.Query(PlaylistItem);
 				query.equalTo('Playlist', playlist);
-				query.descending("likes");
 				query.ascending("createdAt");
+				query.descending("likes");
 				query.find({
 					success: function (playlistItems) {
 						console.log(playlistItems)
@@ -63,6 +63,7 @@ var PlaylistComponent = React.createClass({
 							playlistItems: playlistItems
 						});
 						if (playNext) {
+							debugger;
 							window.playNext();
 						}
 					},
@@ -146,17 +147,12 @@ var PlaylistComponent = React.createClass({
 			success: function (video) {
 				console.log('destroy dat ish');
 				video.destroy();
+				this.fetchPlaylistItems(true);
 			}
 		});
 
-		// update ui
-		var updatedList = this.state.playlistItems;
-		updatedList.shift();
-		this.setState({
-			playlistItems: updatedList
-		});
 	},
-	nextVideo: function () {
+	getTopVideo: function () {
 		if (!this.state.playlistItems.length) {
 			return false;
 		}
@@ -169,15 +165,8 @@ var PlaylistComponent = React.createClass({
 	componentWillMount: function () {
 		events.on('add-video', this.addVideo);
 		// events.on('video-ended', this.);
-		setInterval(this.fetchPlaylistItems, 10000);
+		setInterval(this.fetchPlaylistItems, 5000);
 	},
-	// playNext: function () {
-	// 	var current = this.state.playlistItems.shift();
-	// 	window.playNext(current.get('videoId'));
-	// 	this.setState({
-	// 		playlistItems: this.state.playlistItems
-	// 	});
-	// },
 	render: function () {
 		var playlistItems = this.state.playlistItems;
 		if (!playlistItems) {

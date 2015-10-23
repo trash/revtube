@@ -73,6 +73,7 @@ var ParseTestComponent = window.ParseTestComponent,
 						init: true,
 						playlistId: playlistId,
 					});
+					window.location.hash = playlistId;
 				}.bind(this),
 				failure: function(playlist, error) {
 					console.error('Could not make playlist', error.message);

@@ -77,14 +77,12 @@ h3 {
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.4);
-    height: 170px;
-    width: 150px;
+    height: 250px;
+    width: 190px;
+    visibility: hidden;
 }
 
 #qrcode {
-    position: absolute;
-    top: 30px;
-    left: 10px;
 }
 
 .slide-container {

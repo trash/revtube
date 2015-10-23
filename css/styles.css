@@ -13,6 +13,29 @@ h3 {
     overflow: hidden;
 }
 
+#init {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    text-align: center;
+}
+
+#init > h3 {
+    padding-top: 20px;
+}
+
+.init-button {
+    color: #555;
+    margin-left: 10px;
+}
+
+.init-button:hover {
+    color: #000;
+}
+
 #title {
     position: absolute;
     top: 10px;
@@ -41,10 +64,6 @@ h3 {
 #main {
     height: 100%;
     width: 100%;
-}
-
-input[disabled] {
-    background: #666 !important;
 }
 
 .site-wrapper {

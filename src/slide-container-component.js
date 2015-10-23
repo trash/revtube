@@ -1,6 +1,9 @@
 var playlistId = 'vxLtIafOqa';
 
 var SlideContainerComponent = React.createClass({
+	propTypes: {
+		playlistId: React.PropTypes.string,
+	},
 	getInitialState: function () {
 		return {
 			slideLeft: false
@@ -18,13 +21,13 @@ var SlideContainerComponent = React.createClass({
 		return (
 			<div className={ 'slide-container ' + (this.state.slideLeft ? 'slide-left' : '') }>
 				<div className="left">
-					<window.PlaylistComponent playlistId={ playlistId }/>
+					<window.PlaylistComponent playlistId={ this.props.playlistId }/>
 					<button className="btn add-video-button" onClick={ this.slideLeft }>
 						<i className={ 'glyphicon ' + (this.state.slideLeft ? 'glyphicon-chevron-right' : 'glyphicon-plus') }/>
 					</button>
 				</div>
 				<div className="right">
-					<window.AddVideosComponent playlistId={ playlistId }/>
+					<window.AddVideosComponent playlistId={ this.props.playlistId }/>
 				</div>
 			</div>
 		);

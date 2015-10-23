@@ -69,6 +69,5 @@ document.addEventListener('keyup', function (event) {
             return;
         }
         window.playlist.removeVideo(currentVideo.id);
-        window.playNext();
     }
 });

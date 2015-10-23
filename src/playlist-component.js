@@ -97,6 +97,18 @@ var PlaylistComponent = React.createClass({
 				console.error('Failed to create new object, with error code: ' + error.message);
 			}
 		});
+
+		// Update the ui list of videos
+		var oldPlaylistItems = this.state.playlistItems;
+		oldPlaylistItems.push(playlistItem);
+		this.setState({
+			playlistItems: oldPlaylistItems
+		});
+
+		// They added their first video. start playing it
+		if (this.state.playlistItems.length === 1) {
+			window.playNext();
+		}
 	},
 	updatePlaylistItemLikes: function (id, likes) {
 		// this is inefficient but eh im tired and lazy
@@ -116,7 +128,7 @@ var PlaylistComponent = React.createClass({
 				success: function (playlistItem) {
 					voted[playlistItem.id] = true;
 
-					var currentLikes = playlistItem.get('likes'),
+					var currentLikes = playlistItem.get('likes') || 0,
 						newLikes = currentLikes + 1;
 					playlistItem.set('likes', newLikes);
 					playlistItem.save();
@@ -126,12 +138,36 @@ var PlaylistComponent = React.createClass({
 			});
 		}.bind(this);
 	},
+	removeVideo: function (id) {
+		// Get the video then destroy it on db
+		var query = new Parse.Query(PlaylistItem);
+		query.get(id, {
+			success: function (video) {
+				console.log('destroy dat ish');
+				video.destroy();
+			}
+		});
+
+		// update ui
+		var updatedList = this.state.playlistItems;
+		updatedList.shift();
+		this.setState({
+			playlistItems: updatedList
+		});
+	},
+	nextVideo: function () {
+		if (!this.state.playlistItems.length) {
+			return false;
+		}
+		return this.state.playlistItems[0];
+	},
 	componentDidMount: function () {
 		this.fetchPlaylistItems(true);
 		window.playlist = this;
 	},
 	componentWillMount: function () {
 		events.on('add-video', this.addVideo);
+		// events.on('video-ended', this.);
 		setInterval(this.fetchPlaylistItems, 10000);
 	},
 	// playNext: function () {
@@ -145,6 +181,8 @@ var PlaylistComponent = React.createClass({
 		var playlistItems = this.state.playlistItems;
 		if (!playlistItems) {
 			return <h3>Fetching playlist...</h3>;
+		} else if (!playlistItems.length) {
+			return <h3>Empty playlist. Add some videos.</h3>;
 		}
 		return (
 			<div>

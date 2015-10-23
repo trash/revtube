@@ -64,7 +64,7 @@
       window.initPlayer = function(videoId) {
         $('#video-container').tubular({
           videoId: videoId,
-          mute: true,
+          mute: false,
           repeat: false
         });
 
@@ -92,19 +92,38 @@
       }
 
       window.playNext = function() {
-        var current = window.playlist.state.playlistItems.shift();
-        var videoId = current.get('videoId');
-        window.playlist.setState({
-          playlistItems: window.playlist.state.playlistItems
-        });
+        console.log('play next');
+        var currentVideo = window.playlist.nextVideo();
+        if (!currentVideo) {
+          return;
+        }
+        var currentVideoId = currentVideo.get('videoId');
 
         if (window.player === undefined) {
-          window.initPlayer(videoId);
+          window.initPlayer(currentVideoId);
           window.onYouTubeIframeAPIReady();
         }
         else {
-          window.player.loadVideoById(videoId);
+          window.player.loadVideoById(currentVideoId);
         }
+
+        // Wait a second then begin the check to see if the video has ended
+        setTimeout(function () {
+          // Hacky check to see if video has ended
+          var checkEnded = setInterval(function () {
+            if (!window.player || !window.player.getDuration) {
+              return;
+            }
+            console.log(window.player.getCurrentTime(), window.player.getDuration());
+            // 0.1 from end
+            if (window.player.getDuration() > 0 && window.player.getDuration() - window.player.getCurrentTime() - 0.1 < 0) {
+              events.emit('video-ended');
+              window.playlist.removeVideo(window.playlist.nextVideo().id);
+              window.playNext();
+              clearInterval(checkEnded);
+            }
+          }, 100);
+        }, 1000);
       }
 
 

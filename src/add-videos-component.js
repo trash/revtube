@@ -2,13 +2,19 @@ var SearchVideoResult = React.createClass({
 	propTypes: {
 		video: React.PropTypes.object.isRequired
 	},
+	componentWillMount: function () {
+		events.on('playlist-update', this.forceUpdate.bind(this));
+	},
 	render: function () {
-		var video = this.props.video;
+		var video = this.props.video,
+			videoIsAdded = video.id in window.addedVideos;
 		return (
 			<li className="search-video-result" style={ { 'backgroundImage': 'url(' + video.thumbnail + ')' } } key={ video.id }>
 				<span>{ video.title }</span>
-				<button onClick={ this.props.addVideo(video) }>
-					<i className="glyphicon glyphicon-plus"></i>
+				<button className={ videoIsAdded ? 'added' : '' } onClick={ this.props.addVideo(video) }>
+					{ videoIsAdded ? <i className="glyphicon glyphicon-ok"></i>
+					: <i className="glyphicon glyphicon-plus"></i>
+					}
 				</button>
 			</li>
 		);

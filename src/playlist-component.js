@@ -1,8 +1,9 @@
 var Playlist = Parse.Object.extend('Playlist'),
 	PlaylistItem = Parse.Object.extend('PlaylistItem');
 
-// Map to ghetto keep track of votes
+// Map to ghetto keep track of votes/playlist-adds
 var voted = {};
+window.addedVideos = {};
 
 var PlaylistItemComponent = React.createClass({
 	propTypes: {
@@ -94,7 +95,8 @@ var PlaylistComponent = React.createClass({
 		playlistItem.set('likes', 1);
 
 		playlistItem.save(null, {
-			success: function () {
+			success: function (playlistItem) {
+				window.addedVideos[playlistItem.get('videoId')] = true;
 				events.emit('playlist-update');
 				this.fetchPlaylistItems();
 			}.bind(this),

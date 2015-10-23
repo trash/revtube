@@ -110,6 +110,10 @@ h3 {
     right: 0;
 }
 
+.slide-container.slide-hidden {
+    right: -880px;
+}
+
 .slide-container .left, .slide-container .right {
     height: 100%;
     top: 0;

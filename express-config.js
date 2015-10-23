@@ -30,7 +30,6 @@ module.exports = function(app) {
 		app.use(express.favicon(path.join(rootPath, 'public', 'favicon.ico')));
 		app.use(express.static(path.join(rootPath)));
 		app.set('views', rootPath);
-		console.log(rootPath);
 	});
 
 	app.configure(function(){

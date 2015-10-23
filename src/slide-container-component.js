@@ -15,7 +15,6 @@ var SlideContainerComponent = React.createClass({
 		return (
 			<div className={ 'slide-container ' + (this.state.slideLeft ? 'slide-left' : '') }>
 				<div className="left">
-	      			<h3>Up Next</h3>
 					<window.PlaylistComponent playlistId={ playlistId }/>
 					<button className="btn add-video-button" onClick={ this.slideLeft }>
 						<i className={ 'glyphicon ' + (this.state.slideLeft ? 'glyphicon-chevron-right' : 'glyphicon-plus') }/>

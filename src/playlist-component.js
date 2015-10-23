@@ -3,7 +3,8 @@ var Playlist = Parse.Object.extend('Playlist'),
 
 var PlaylistItemComponent = React.createClass({
 	propTypes: {
-		playlistItem: React.PropTypes.object.isRequired
+		playlistItem: React.PropTypes.object.isRequired,
+		voteVideo: React.PropTypes.func
 	},
 	render: function () {
 		var playlistItem = this.props.playlistItem;
@@ -18,6 +19,11 @@ var PlaylistItemComponent = React.createClass({
 				</div>
 				<div className="video-title">{ playlistItem.get('videoTitle') }</div>
 				<span className="video-likes glyphicon glyphicon-thumbs-up"> { playlistItem.get('likes') }</span>
+				{ this.props.noVoteButton ? false :
+					<button className="vote-button" onClick={ this.props.voteVideo(playlistItem) }>
+						<i className="glyphicon glyphicon-thumbs-up"/>
+					</button>
+				}
 			</li>
 		);
 	}
@@ -89,6 +95,18 @@ var PlaylistComponent = React.createClass({
 			}
 		});
 	},
+	voteVideo: function (video) {
+		return function () {
+			var query = new Parse.Query(PlaylistItem);
+			query.get(video.id, {
+				success: function (playlistItem) {
+					var currentLikes = playlistItem.get('likes');
+					playlistItem.set('likes', currentLikes + 1);
+					playlistItem.save();
+				}
+			});
+		};
+	},
 	componentDidMount: function () {
 		this.fetchPlaylistItems(true);
 		window.playlist = this;
@@ -110,11 +128,19 @@ var PlaylistComponent = React.createClass({
 			return <h3>Fetching playlist...</h3>;
 		}
 		return (
-			<ul className="list-unstyled playlist-container" id="queue-list">
-				{ playlistItems.map(function (playlistItem) {
-					return <PlaylistItemComponent key={ playlistItem.id } playlistItem={ playlistItem } />
-				}) }
-			</ul>
+			<div>
+				<PlaylistItemComponent key={ playlistItems[0].id }
+					noVoteButton={ true }
+					playlistItem={ playlistItems[0] } />
+				<h3>Up Next</h3>
+				<ul className="list-unstyled playlist-container" id="queue-list">
+					{ playlistItems.slice(1, playlistItems.length).map(function (playlistItem) {
+						return <PlaylistItemComponent key={ playlistItem.id }
+							voteVideo={ this.voteVideo }
+							playlistItem={ playlistItem } />
+					}.bind(this)) }
+				</ul>
+			</div>
 		);
 	}
 });

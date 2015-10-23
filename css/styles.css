@@ -94,8 +94,9 @@ ul {
     padding: 0.25em;
 }
 .playlist-container {
-    top: 42px;
+    top: 152px;
     bottom: 100px;
+    width: 100%;
     overflow: scroll;
     position: absolute;
 }
@@ -107,7 +108,6 @@ ul {
     left: 0;
     right: 0;
     margin: auto;
-    width: 90%;
     padding: 12px;
     background: #0af;
 }
@@ -181,18 +181,25 @@ ul {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-#queue-list {
-    width: 100%;
+.vote-button {
+    position: absolute;
+    right: 0;
     height: 100%;
-    overflow: hidden;
+    top: 0;
+    width: 25%;
+    background: #333;
+    border: 0;
+}
+.vote-button.active {
+    background: #0af;
 }
 
 #queue-list li {
     height: 90px;
-    width: 330px;
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.2);
     position: relative;
-    margin: 0 0 10px 10px;
+    margin: 0 0 10px 0;
 }
 
 .video-pic {

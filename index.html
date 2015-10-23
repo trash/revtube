@@ -69,25 +69,26 @@
         });
 
         var oldOnPlayerReady = window.onPlayerReady;
-
         window.onPlayerReady = function(e) {
           oldOnPlayerReady(e);
 
           $(window).keypress(function(e) {
             if (e.keyCode === 0 || e.keyCode === 32) {
-              if (window.player.B.playerState == 1)
+              if (window.player.B.playerState == 1) // playing
                 window.player.pauseVideo();
-              else if (window.player.B.playerState == 2)
+              else if (window.player.B.playerState == 2) // paused
                 window.player.playVideo();
             }
           });
         }
 
         var oldOnPlayerStateChange = window.onPlayerStateChange;
-
         window.onPlayerStateChange = function (event) {
           oldOnPlayerStateChange(event);
-          showVideoInfo();
+          if (window.player.B.playerState == 0) // stopped
+            window.playNext();
+          else if (window.player.B.playerState == 1) // playing
+            showVideoInfo();
         }
       }
 

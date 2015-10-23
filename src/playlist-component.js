@@ -1,6 +1,9 @@
 var Playlist = Parse.Object.extend('Playlist'),
 	PlaylistItem = Parse.Object.extend('PlaylistItem');
 
+// Map to ghetto keep track of votes
+var voted = {};
+
 var PlaylistItemComponent = React.createClass({
 	propTypes: {
 		playlistItem: React.PropTypes.object.isRequired,
@@ -20,7 +23,7 @@ var PlaylistItemComponent = React.createClass({
 				<div className="video-title">{ playlistItem.get('videoTitle') }</div>
 				<span className="video-likes glyphicon glyphicon-thumbs-up"> { playlistItem.get('likes') }</span>
 				{ this.props.noVoteButton ? false :
-					<button className="vote-button" onClick={ this.props.voteVideo(playlistItem) }>
+					<button className={ 'vote-button ' + (playlistItem.id in voted ? 'active': '') } onClick={ this.props.voteVideo(playlistItem) }>
 						<i className="glyphicon glyphicon-thumbs-up"/>
 					</button>
 				}
@@ -95,17 +98,33 @@ var PlaylistComponent = React.createClass({
 			}
 		});
 	},
+	updatePlaylistItemLikes: function (id, likes) {
+		// this is inefficient but eh im tired and lazy
+		var playlistItems = this.state.playlistItems,
+			index = playlistItems.map(function (item) {
+				return item.id;
+			}).indexOf(id);
+		playlistItems[index].set('likes', likes);
+		this.setState({
+			playlistItems: playlistItems
+		});
+	},
 	voteVideo: function (video) {
 		return function () {
 			var query = new Parse.Query(PlaylistItem);
 			query.get(video.id, {
 				success: function (playlistItem) {
-					var currentLikes = playlistItem.get('likes');
-					playlistItem.set('likes', currentLikes + 1);
+					voted[playlistItem.id] = true;
+
+					var currentLikes = playlistItem.get('likes'),
+						newLikes = currentLikes + 1;
+					playlistItem.set('likes', newLikes);
 					playlistItem.save();
-				}
+
+					this.updatePlaylistItemLikes(playlistItem.id, newLikes);
+				}.bind(this)
 			});
-		};
+		}.bind(this);
 	},
 	componentDidMount: function () {
 		this.fetchPlaylistItems(true);

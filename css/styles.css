@@ -133,7 +133,7 @@ ul {
 .add-video-button {
     border-radius: 0;
     position: absolute;
-    bottom: 16px;
+    bottom: 0;
     width: 100%;
     left: 0;
     right: 0;
@@ -201,6 +201,10 @@ ul {
     width: 50%;
     background: #0af;
     border: 0;
+}
+
+.search-video-result button.added {
+    background: #333;
 }
 
 .search-video-result i {

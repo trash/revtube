@@ -74,7 +74,7 @@ document.addEventListener('keyup', function (event) {
         var currentVideo = window.playlist.getTopVideo();
         // If no video, don't skip
         // also don't skip if they're just moving arrow key in input element
-        if (!currentVideo || e.target.nodeName === 'INPUT') {
+        if (!currentVideo || event.target.nodeName === 'INPUT') {
             return;
         }
         window.playlist.removeVideo(currentVideo.id);

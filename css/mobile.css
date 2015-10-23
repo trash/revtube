@@ -1,0 +1,16 @@
+.mobile {
+	background: #0af0af;
+}
+
+.mobile .slide-container {
+	width: 200%;
+	right: -100%;
+}
+
+.mobile .slide-container.slide-left {
+	right: 0;
+}
+
+.mobile .search-video-result {
+	padding: 120px 0;
+}

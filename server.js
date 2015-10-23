@@ -27,7 +27,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Populate empty DB with sample data
 // require('./lib/config/dummydata');
-  
+
 // Passport Configuration
 // var passport = require('./lib/config/passport');
 
@@ -41,6 +41,16 @@ require('./express-config')(app);
 
 app.get('/', function (req, res) {
 	res.render('index');
+});
+
+app.get("/api/tts", function (req, res){
+  res.type('audio/mpeg');
+
+  var text = req.query.text;
+  var request = require('request');
+  // var url = "http://translate.google.com/translate_tts?tl=en&q=" + text;
+  var url = "http://www.voicerss.org/controls/speech.ashx?hl=en-us&c=mp3&src=" + text;
+  request.get(url).pipe(res);
 });
 
 // Start server

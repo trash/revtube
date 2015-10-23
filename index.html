@@ -39,6 +39,7 @@
   <script type="text/babel" src="src/slide-container-component.js"></script>
   <!-- Main React entry point -->
   <script type="text/babel" src="src/main.js"></script>
+  <script src="scripts/readme.js"></script>
 
 
 
@@ -53,13 +54,6 @@
           colorLight : "#ffffff",
           correctLevel : QRCode.CorrectLevel.H
       });
-
-      function showVideoInfo(){
-        var title = window.player.B.videoData.title;
-        var author = window.player.B.videoData.author;
-        $("#title").text(title);
-        $("#author").text(author);
-      }
 
       window.initPlayer = function(videoId) {
         $('#video-container').tubular({
@@ -93,8 +87,7 @@
             var topVideo = window.playlist.getTopVideo();
             window.playlist.removeVideo(topVideo.id);
           }
-          else if (window.player.B.playerState == 1) // playing
-            showVideoInfo();
+          // else if (window.player.B.playerState == 1) // playing
         }
       }
 
@@ -108,15 +101,18 @@
         currentVideoId = currentVideo.get('videoId');
         window.playlist.markAsCurrent(currentVideo);
 
-        if (window.player === undefined) {
-          window.initPlayer(currentVideoId);
-          window.onYouTubeIframeAPIReady();
-        }
-        else {
-          window.player.loadVideoById(currentVideoId);
-        }
+        // announce for 2 seconds
+        window.readme("And now... " + currentVideo.get('videoTitle') + "!");
+        setTimeout(function() {
+          if (window.player === undefined) {
+            window.initPlayer(currentVideoId);
+            window.onYouTubeIframeAPIReady();
+          }
+          else {
+            window.player.loadVideoById(currentVideoId);
+          }
+        }, 2000);
       }
-
 
   </script>
 </body>

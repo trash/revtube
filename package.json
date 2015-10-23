@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "ejs": "^2.3.4",
-    "express": "~3.4.3"
+    "express": "~3.4.3",
+    "request": "^2.65.0"
   },
   "engines": {
     "node": ">=0.10.0"

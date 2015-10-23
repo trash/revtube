@@ -190,6 +190,10 @@ ul {
     background: #0af;
 }
 
+li {
+    list-style: none;
+}
+
 #queue-list li {
     height: 90px;
     width: 100%;

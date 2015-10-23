@@ -74,6 +74,10 @@
 
           $(window).keypress(function(e) {
             if (e.keyCode === 0 || e.keyCode === 32) {
+              // Dont pause if the user is typing text in an input
+              if (e.target.nodeName === 'INPUT') {
+                return;
+              }
               if (window.player.B.playerState == 1) // playing
                 window.player.pauseVideo();
               else if (window.player.B.playerState == 2) // paused

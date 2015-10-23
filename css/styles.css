@@ -86,12 +86,14 @@ h3 {
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.4);
-    height: 250px;
+    height: 210px;
     width: 200px;
     visibility: hidden;
+    text-align: center;
 }
 
-#qrcode {
+#qrcode canvas {
+    border: 2px solid white;
 }
 
 .slide-container {

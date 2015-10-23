@@ -38,19 +38,11 @@ var SlideContainerComponent = React.createClass({
 		$('#join-link').text(party_url);
 		$('#qrcode').html(''); // clean up the previous one
 
-		// var qrcode = new QRCode("qrcode", {
-		// 	text: party_url,
-		// 	width: 130,
-		// 	height: 130,
-		// 	colorDark : "#000000",
-		// 	colorLight : "#ffffff",
-		// 	correctLevel : QRCode.CorrectLevel.H
-		// });
-
 		$('#qrcode').qrcode({
 			render: 'canvas',
-			size: 130,
-			text: party_url
+			width: 150,
+			height: 150,
+			text: '"' + party_url + '"'
 		});
 
 		$('#join-container').css('visibility', 'visible');

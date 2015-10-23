@@ -26,6 +26,18 @@ h3 {
     font-size: 20px
 }
 
+.active-video {
+    background: rgba(0, 170, 255, 0.54) !important;
+    position: relative;
+}
+.active-video-icon {
+    position: absolute;
+    z-index: 1;
+    font-size: 50px;
+    top: 16px;
+    left: 33px;
+}
+
 #main {
     height: 100%;
     width: 100%;

@@ -1,10 +1,9 @@
-var root_url = 'http://localhost:8000';
-
 var SlideContainerComponent = React.createClass({
 	propTypes: {
 		playlistId: React.PropTypes.string,
 	},
 	getInitialState: function () {
+
 		return {
 			slideLeft: false
 		};
@@ -19,6 +18,7 @@ var SlideContainerComponent = React.createClass({
 	},
 	render: function () {
 		// Also update the qr code when this is rendered.
+		var root_url = window.location.hostname;
 		var party_url = root_url + "?party_code=" + this.props.playlistId + "&/";
 		$('#join-link').html(party_url);
 		var qrcode = new QRCode("qrcode", {

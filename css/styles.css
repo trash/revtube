@@ -27,7 +27,8 @@ h3 {
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    width: 400px;
+    max-width: 400px;
+    width: 100%;
     text-align: center;
 }
 
@@ -110,8 +111,10 @@ h3 {
     right: 0;
 }
 
-.slide-container.slide-hidden {
-    right: -880px;
+@media (min-width: 768px) {
+    .slide-container.slide-hidden {
+        right: -880px;
+    }
 }
 
 .slide-container .left, .slide-container .right {

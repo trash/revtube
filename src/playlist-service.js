@@ -36,6 +36,21 @@ PlaylistService.prototype.addVideo = function (video) {
 	return playlistItem;
 };
 
+PlaylistService.prototype.removeVideo = function (id, callback) {
+	// Get the video then destroy it on db
+	var query = new Parse.Query(PlaylistItem);
+	query.get(id, {
+		success: function (video) {
+			console.log('destroy dat ish');
+			video.destroy({
+				success: function () {
+					callback();
+				}
+			});
+		}
+	});
+};
+
 /**
  * Normalize video data returned from youtube api
  * into what we want to store on server

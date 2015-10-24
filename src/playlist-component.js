@@ -95,20 +95,10 @@ var PlaylistComponent = React.createClass({
 		}.bind(this);
 	},
 	removeVideo: function (id) {
-		// Get the video then destroy it on db
-		var self = this;
-		var query = new Parse.Query(PlaylistItem);
-		query.get(id, {
-			success: function (video) {
-				console.log('destroy dat ish');
-				video.destroy({
-					success: function(){
-						self.fetchPlaylistItems(true);
-					}
-				});
-			}
-		});
-
+		playlistService.removeVideo(id, function () {
+			// Force refresh playlist so playlist item gets removed on ui
+			this.fetchPlaylistItems(true);
+		}.bind(this));
 	},
 	getTopVideo: function () {
 		if (!this.state.playlistItems.length) {

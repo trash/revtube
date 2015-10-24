@@ -1,4 +1,5 @@
-var PlaylistItem = Parse.Object.extend('PlaylistItem');
+var Playlist = Parse.Object.extend('Playlist'),
+	PlaylistItem = Parse.Object.extend('PlaylistItem');
 
 var PlaylistService = function () {};
 
@@ -35,6 +36,13 @@ PlaylistService.prototype.addVideo = function (video) {
 	return playlistItem;
 };
 
+/**
+ * Normalize video data returned from youtube api
+ * into what we want to store on server
+ *
+ * @param {Object[]} videos
+ * @return {Object[]}
+ */
 PlaylistService.prototype.normalizeVideos = function (videos) {
 	return videos.map(function (video) {
 		return {
@@ -46,11 +54,17 @@ PlaylistService.prototype.normalizeVideos = function (videos) {
 	});
 };
 
-PlaylistService.prototype.fetchPlaylistItems = function (callback) {
+/**
+ * Fetch the playlist items for the given playlist
+ *
+ * @param {String} playlistId
+ * @param {Function} callback Callback called on success that is invoked with playlistItems
+ */
+PlaylistService.prototype.fetchPlaylistItems = function (playlistId, callback) {
 	console.log('fetch playlist');
 	var playlistQuery = new Parse.Query(Playlist),
 		service = this;
-	playlistQuery.equalTo('code', this.props.playlistId);
+	playlistQuery.equalTo('code', playlistId);
 	playlistQuery.find({
 		success: function (playlists) {
 			var playlist = playlists[0];

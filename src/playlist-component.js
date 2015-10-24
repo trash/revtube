@@ -15,7 +15,7 @@ var PlaylistComponent = React.createClass({
 		};
 	},
 	fetchPlaylistItems: function (playNext) {
-		playlistService.fetchPlaylistItems(function (playlistItems) {
+		playlistService.fetchPlaylistItems(this.props.playlistId, function (playlistItems) {
 			// async callback, component might unmount which causes this to break
 			if (!this.isMounted()) {
 				return;

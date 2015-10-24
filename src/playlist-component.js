@@ -1,39 +1,9 @@
 var Playlist = Parse.Object.extend('Playlist'),
-	PlaylistItem = Parse.Object.extend('PlaylistItem');
-
-// Map to ghetto keep track of votes/playlist-adds
-var voted = {};
-window.addedVideos = {};
-
-var PlaylistItemComponent = React.createClass({
-	propTypes: {
-		playlistItem: React.PropTypes.object.isRequired,
-		voteVideo: React.PropTypes.func,
-		activeVideo: React.PropTypes.bool
-	},
-	render: function () {
-		var playlistItem = this.props.playlistItem;
-		var videoPicStyle = {
-		  backgroundImage: 'url("' + playlistItem.get('videoThumbnail') + '")'
-		};
-
-		return (
-			<li className={ (this.props.activeVideo ? 'active-video' : '') }>
-				{ this.props.activeVideo ?
-					<i className="active-video-icon glyphicon glyphicon-play"/>
-				 : false }
-				<div className="video-pic" style={videoPicStyle}></div>
-				<div className="video-title">{ playlistItem.get('videoTitle') }</div>
-				<span className="video-likes glyphicon glyphicon-thumbs-up"> { playlistItem.get('likes') }</span>
-				{ this.props.activeVideo ? false :
-					<button className={ 'vote-button ' + (playlistItem.id in voted ? 'active': '') } onClick={ this.props.voteVideo(playlistItem) }>
-						<i className="glyphicon glyphicon-thumbs-up"/>
-					</button>
-				}
-			</li>
-		);
-	}
-});
+	PlaylistItem = Parse.Object.extend('PlaylistItem'),
+	PlaylistItemComponent = window.PlaylistItemComponent,
+	playlistService = window.playlistService,
+	addedVideos = window.tube.addedVideos,
+	votedVideos = window.tube.votedVideos;
 
 var PlaylistComponent = React.createClass({
 	propTypes: {
@@ -86,26 +56,8 @@ var PlaylistComponent = React.createClass({
 		});
 	},
 	addVideo: function (video) {
-		var playlistItem = new PlaylistItem();
-
-		playlistItem.set('videoId', video.id);
-		playlistItem.set('videoTitle', video.title);
-		playlistItem.set('videoThumbnail', video.thumbnail);
-		playlistItem.set('Playlist', this.playlist);
-		playlistItem.set('likes', 1);
-
-		playlistItem.save(null, {
-			success: function (playlistItem) {
-				window.addedVideos[playlistItem.get('videoId')] = true;
-				events.emit('playlist-update');
-				this.fetchPlaylistItems();
-			}.bind(this),
-			error: function (playlistItem, error) {
-				// Execute any logic that should take place if the save fails.
-				// error is a Parse.Error with an error code and message.
-				console.error('Failed to create new object, with error code: ' + error.message);
-			}
-		});
+		// Update server
+		var playlistItem = playlistService.addVideo(video);
 
 		// Update the ui list of videos
 		var oldPlaylistItems = this.state.playlistItems;
@@ -149,14 +101,14 @@ var PlaylistComponent = React.createClass({
 	voteVideo: function (video) {
 		return function () {
 			// Add vote if it's not already been voted on
-			var positiveVote = !(video.id in voted),
+			var positiveVote = !(video.id in votedVideos),
 				query = new Parse.Query(PlaylistItem);
 			query.get(video.id, {
 				success: function (playlistItem) {
 					if (positiveVote) {
-						voted[playlistItem.id] = true;
+						votedVideos[playlistItem.id] = true;
 					} else {
-						delete voted[playlistItem.id];
+						delete votedVideos[playlistItem.id];
 					}
 
 					var currentLikes = playlistItem.get('likes') || 0,

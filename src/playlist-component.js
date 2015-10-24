@@ -15,45 +15,18 @@ var PlaylistComponent = React.createClass({
 		};
 	},
 	fetchPlaylistItems: function (playNext) {
-		console.log('fetch playlist');
-		var playlistQuery = new Parse.Query(Playlist),
-			component = this;
-		playlistQuery.equalTo('code', this.props.playlistId);
-		playlistQuery.find({
-			success: function (playlists) {
-				// async callback, component might unmount which causes this to break
-				if (!component.isMounted()) {
-					return;
-				}
-				var playlist = playlists[0];
-				component.playlist = playlist;
-
-				var query = new Parse.Query(PlaylistItem);
-				query.equalTo('Playlist', playlist);
-				query.ascending("createdAt");
-				query.descending("likes");
-				query.find({
-					success: function (playlistItems) {
-						console.log(playlistItems)
-						// The object was retrieved successfully.
-						component.setState({
-							playlistItems: playlistItems
-						});
-						if (playNext === true) {
-							window.playNext();
-						}
-					},
-					error: function (object, error) {
-						// The object was not retrieved successfully.
-						// error is a Parse.Error with an error code and message.
-						console.error('Error fetching playlist items.', error);
-					}
-				});
-			},
-			error: function (object, error) {
-				console.error('Error fetching playlist object.', error);
+		playlistService.fetchPlaylistItems(function (playlistItems) {
+			// async callback, component might unmount which causes this to break
+			if (!this.isMounted()) {
+				return;
 			}
-		});
+			this.setState({
+				playlistItems: playlistItems
+			});
+			if (playNext === true) {
+				window.playNext();
+			}
+		}.bind(this));
 	},
 	addVideo: function (video) {
 		// Update server

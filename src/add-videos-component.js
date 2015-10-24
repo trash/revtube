@@ -1,3 +1,5 @@
+var playlistService = window.playlistService;
+
 var SearchVideoResult = React.createClass({
 	propTypes: {
 		video: React.PropTypes.object.isRequired
@@ -54,16 +56,8 @@ var AddVideosComponent = React.createClass({
 		});
 	}, 250),
 	updateResults: function (videos) {
-		videos = videos.map(function (video) {
-			return {
-				id: video.id.videoId,
-				title: video.snippet.title,
-				description: video.snippet.description,
-				thumbnail: video.snippet.thumbnails.medium.url
-			};
-		});
 		this.setState({
-			searchResults: videos
+			searchResults: playlistService.normalizeVideos(videos)
 		});
 	},
 	addVideo: function (video) {

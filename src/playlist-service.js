@@ -104,24 +104,6 @@ PlaylistService.prototype.voteVideo = function (video, callback) {
 };
 
 /**
- * Normalize video data returned from youtube api
- * into what we want to store on server
- *
- * @param {Object[]} videos
- * @return {Object[]}
- */
-PlaylistService.prototype.normalizeVideos = function (videos) {
-	return videos.map(function (video) {
-		return {
-			id: video.id.videoId,
-			title: video.snippet.title,
-			description: video.snippet.description,
-			thumbnail: video.snippet.thumbnails.medium.url
-		};
-	});
-};
-
-/**
  * Fetch the playlist items for the given playlist
  *
  * @param {String} playlistId

@@ -38,27 +38,12 @@ var AddVideosComponent = React.createClass({
 
 		this.queryYoutube();
 	},
-	queryYoutube: _.debounce(function () {
-		$.ajax({
-			type: 'get',
-			url: 'https://content.googleapis.com/youtube/v3/search',
-			data: {
-				part: 'snippet',
-				type: 'video',
-				q: this.state.searchValue,
-				key: 'AIzaSyBqf7fU8HgDmRG752sxL1eoff5rSJVIEKk',
-				maxResults: 10
-			},
-			success: function (response) {
-				console.log(response);
-				this.updateResults(response.items);
-			}.bind(this)
-		});
-	}, 250),
-	updateResults: function (videos) {
-		this.setState({
-			searchResults: playlistService.normalizeVideos(videos)
-		});
+	queryYoutube: function () {
+		youtubeService.searchForVideos(this.state.searchValue, function (videos) {
+			this.setState({
+				searchResults: videos
+			});
+		}.bind(this));
 	},
 	addVideo: function (video) {
 		return function () {
@@ -72,6 +57,9 @@ var AddVideosComponent = React.createClass({
 		this.queryYoutube();
 	},
 	componentWillMount: function () {
+		// Instantiate reference to debounced query youtube function
+		this.debouncedQueryYoutube = _.debounce(this.queryYoutube, 250);
+
 		events.on('youtube-api-ready', function () {
 			this.setState({
 				disabled: false

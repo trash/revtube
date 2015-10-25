@@ -94,13 +94,13 @@ var PlaylistComponent = React.createClass({
 		}
 		return (
 			<div>
-				<ul className="list-unstyled" id="current-list">
+				<ul className="list-unstyled video-list" id="current-list">
 				<PlaylistItemComponent key={ playlistItems[0].id }
 					activeVideo={ true }
 					playlistItem={ playlistItems[0] } />
 				</ul>
 				<h3>Up Next</h3>
-				<ul className="list-unstyled playlist-container" id="queue-list">
+				<ul className="list-unstyled video-list playlist-container" id="queue-list">
 					{ playlistItems.slice(1, playlistItems.length).map(function (playlistItem) {
 						return <PlaylistItemComponent key={ playlistItem.id }
 							voteVideo={ this.voteVideo }

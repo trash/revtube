@@ -1,0 +1,19 @@
+.add-video-button {
+    border-radius: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 12px;
+    background: #0af;
+
+    i {
+        font-size: 20px;
+    }
+}
+
+.add-videos-go-back {
+    display: none;
+}

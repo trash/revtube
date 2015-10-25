@@ -1,0 +1,67 @@
+.playlist-container {
+    top: 152px;
+    bottom: 100px;
+    width: 100%;
+    overflow: scroll;
+    position: absolute;
+}
+
+#current-list li .video-likes {
+    display: none;
+}
+
+.video-list li {
+    height: 90px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin: 0 0 10px 0;
+}
+
+.video-pic {
+    height: 90px;
+    width: 120px;
+    background-color: black;
+    position: relative;
+}
+.video-title {
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 125px;
+    height: 80px;
+    width: 205px;
+    text-overflow: ellipsis;
+}
+.video-likes {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.vote-button {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    top: 0;
+    width: 25%;
+    background: #333;
+    border: 0;
+
+    &.active {
+        background: #0af;
+    }
+}
+
+.active-video {
+    background: rgba(0, 170, 255, 0.54) !important;
+    position: relative;
+}
+.active-video-icon {
+    position: absolute;
+    z-index: 1;
+    font-size: 50px;
+    top: 16px;
+    left: 33px;
+}

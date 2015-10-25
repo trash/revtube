@@ -1,7 +1,7 @@
 'use strict';
 var Playlist = Parse.Object.extend('Playlist'),
 	PlaylistItem = Parse.Object.extend('PlaylistItem'),
-	PlaylistItemComponent = require('./playlist-item-component'),
+	PlaylistItemComponent = require('./playlist-item-component.jsx'),
 	playlistService = require('./playlist-service'),
 	events = require('./events'),
 	addedVideos = playlistService.addedVideos,

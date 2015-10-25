@@ -1,6 +1,6 @@
 'use strict';
-var PlaylistComponent = require('./playlist-component'),
-	AddVideosComponent = require('./add-videos-component'),
+var PlaylistComponent = require('./playlist-component.jsx'),
+	AddVideosComponent = require('./add-videos-component.jsx'),
 	events = require('./events');
 
 var SlideContainerComponent = React.createClass({

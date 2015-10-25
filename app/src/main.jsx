@@ -1,5 +1,5 @@
 var Playlist = Parse.Object.extend('Playlist'),
-	SlideContainerComponent = require('./slide-container-component');
+	SlideContainerComponent = require('./slide-container-component.jsx');
 
 var MainComponent = React.createClass({
 		getInitialState: function() {

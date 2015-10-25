@@ -1,7 +1,7 @@
-var Playlist = Parse.Object.extend('Playlist')
+var Playlist = Parse.Object.extend('Playlist'),
+	SlideContainerComponent = require('./slide-container-component');
 
-var ParseTestComponent = window.ParseTestComponent,
-	MainComponent = React.createClass({
+var MainComponent = React.createClass({
 		getInitialState: function() {
 			var partyCode = window.location.hash.substr(1);
 			if (partyCode === "") {
@@ -37,7 +37,7 @@ var ParseTestComponent = window.ParseTestComponent,
 		render: function () {
 			if (this.state.init) {
 				return (
-					<window.SlideContainerComponent playlistId ={this.state.playlistId}/>
+					<SlideContainerComponent playlistId ={this.state.playlistId}/>
 				);
 			} else {
 				var playlistName = "testing with spaces";

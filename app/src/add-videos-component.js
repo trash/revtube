@@ -1,4 +1,5 @@
-var playlistService = window.playlistService;
+var playlistService = require('./playlist-service'),
+	youtubeService = require('./youtube-service');
 
 var SearchVideoResult = React.createClass({
 	propTypes: {
@@ -91,4 +92,4 @@ var AddVideosComponent = React.createClass({
 	}
 });
 
-window.AddVideosComponent = AddVideosComponent;
+module.exports = AddVideosComponent;

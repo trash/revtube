@@ -1,0 +1,30 @@
+@media (max-width: 768px) {
+	.slide-container {
+		width: 200%;
+		right: -100%;
+	}
+	#join-container {
+		display: none;
+	}
+	#tubular-container {
+		display: none;
+	}
+
+	.add-videos-container ul {
+		bottom: 72px;
+	}
+	.add-videos-go-back {
+		display: block;
+		position: absolute;
+		bottom: 16px;
+		width: 100%;
+		height: 50px;
+		border-radius: 0;
+		background: #0af;
+		border: 0
+	}
+	#main {
+		width: 100%;
+		overflow: hidden;
+	}
+}

@@ -1,7 +1,7 @@
 var Playlist = Parse.Object.extend('Playlist'),
 	PlaylistItem = Parse.Object.extend('PlaylistItem'),
-	PlaylistItemComponent = window.PlaylistItemComponent,
-	playlistService = window.playlistService,
+	PlaylistItemComponent = require('./playlist-item-component'),
+	playlistService = require('./playlist-service'),
 	addedVideos = playlistService.addedVideos,
 	votedVideos = playlistService.votedVideos;
 
@@ -76,9 +76,9 @@ var PlaylistComponent = React.createClass({
 	},
 	componentDidMount: function () {
 		this.fetchPlaylistItems(true);
-		window.playlist = this;
 	},
 	componentWillMount: function () {
+		window.playlist = this;
 		events.on('add-video', this.addVideo);
 		// events.on('video-ended', this.);
 		setInterval(this.fetchPlaylistItems, 5000);
@@ -110,4 +110,4 @@ var PlaylistComponent = React.createClass({
 	}
 });
 
-window.PlaylistComponent = PlaylistComponent;
+module.exports = PlaylistComponent;

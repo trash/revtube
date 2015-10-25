@@ -1,58 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
+<html>
 <head>
-  <title>PartyTube</title>
-  <meta name="description" content="PartyTube">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/mobile.css">
+	<title>PartyTube</title>
+	<meta name="description" content="PartyTube">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/mobile.css">
 </head>
 
 <body>
-  <div class="site-wrapper" id="video-container">
-    <div id="main"></div>
-    <div id="join-container">
-      <h3>Join and add</h3>
-      <div id="qrcode"></div>
-      <p id='join-link'> (insert link here) </p>
-    </div>
-  </div>
-  <div id="bunnies-container">
+	<div class="site-wrapper" id="video-container">
+		<div id="main"></div>
+		<div id="join-container">
+			<h3>Join and add</h3>
+			<div id="qrcode"></div>
+			<p id='join-link'> (insert link here) </p>
+		</div>
+	</div>
+	<div id="bunnies-container">
 
-  </div>
+	</div>
 
 
-  <script src="vendor/eventemitter2.js"></script>
-  <script type="text/javascript">
-    var events = new window.EventEmitter2();
-  </script>
-  <script src="vendor/jquery-2.1.4.min.js"></script>
-  <script src="scripts/jquery.tubular.1.0.js"></script>
+	<script src="vendor/eventemitter2.js"></script>
+	<script type="text/javascript">
+		var events = new window.EventEmitter2();
+	</script>
+	<script src="vendor/jquery-2.1.4.min.js"></script>
+	<script src="scripts/jquery.tubular.1.0.js"></script>
 
-  <script src="vendor/lodash.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script src="https://www.parsecdn.com/js/parse-latest.js"></script>
-  <!--<script src="scripts/qrcode.min.js"></script>-->
-  <script src="scripts/qrcode.js"></script>
-  <script src="scripts/jquery.qrcode.js"></script>
-  <script src="vendor/browser.min.js"></script>
+	<script src="vendor/lodash.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://www.parsecdn.com/js/parse-latest.js"></script>
+	<!--<script src="scripts/qrcode.min.js"></script>-->
+	<script src="scripts/qrcode.js"></script>
+	<script src="scripts/jquery.qrcode.js"></script>
+	<script src="vendor/browser.min.js"></script>
 
-  <script src="vendor/react/react.js"></script>
-  <script src="vendor/react/react-dom.js"></script>
-    <!-- React components -->
-  <script type="text/babel" src="src/youtube-service.js"></script>
-  <script type="text/babel" src="src/playlist-service.js"></script>
-  <script type="text/babel" src="src/add-videos-component.js"></script>
-  <script type="text/babel" src="src/playlist-item-component.js"></script>
-  <script type="text/babel" src="src/playlist-component.js"></script>
-  <script type="text/babel" src="src/slide-container-component.js"></script>
-  <!-- Main React entry point -->
-  <script type="text/babel" src="src/main.js"></script>
-  <script src="scripts/readme.js"></script>
-  <script type="text/javascript" src="scripts/app.js"></script>
-  <script type="text/javascript" src="scripts/pixi.min.js"></script>
-  <script type="text/javascript" src="scripts/Math2.js"></script>
-  <script type="text/javascript" src="scripts/bunnyBenchMark.js"></script>
+	<script src="vendor/react/react.js"></script>
+	<script src="vendor/react/react-dom.js"></script>
+		<!-- React components -->
+	<script src="app/build/src/bundle.js"></script>
+	<!-- Main React entry point -->
+	<script src="scripts/readme.js"></script>
+	<script type="text/javascript" src="scripts/pixi.min.js"></script>
+	<script type="text/javascript" src="scripts/Math2.js"></script>
+	<script type="text/javascript" src="scripts/bunnyBenchMark.js"></script>
 </body>
 
 </html>

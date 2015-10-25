@@ -144,4 +144,4 @@ PlaylistService.prototype.fetchPlaylistItems = function (playlistId, callback) {
 	});
 };
 
-window.playlistService = new PlaylistService();
+module.exports = new PlaylistService();

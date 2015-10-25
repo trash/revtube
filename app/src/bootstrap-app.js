@@ -1,6 +1,4 @@
-var playlistService = window.playlistService;
-
-Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCmiKMmy0zRbYeMhGJ5YQFG6k');
+var playlistService = require('./playlist-service');
 
 window.initPlayer = function(videoId) {
     $('#video-container').tubular({
@@ -45,7 +43,7 @@ window.playNext = function() {
     if (!currentVideo) {
         return;
     }
-    currentVideoId = currentVideo.get('videoId');
+    var currentVideoId = currentVideo.get('videoId');
     playlistService.markAsCurrent(currentVideo);
 
     // announce for 2 seconds

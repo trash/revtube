@@ -36,4 +36,4 @@ YoutubeService.prototype.normalizeVideos = function (videos) {
 	});
 };
 
-window.youtubeService = new YoutubeService();
+module.exports = new YoutubeService();

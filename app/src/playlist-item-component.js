@@ -1,4 +1,5 @@
-var votedVideos = playlistService.votedVideos;
+var playlistService = require('./playlist-service'),
+	votedVideos = playlistService.votedVideos;
 
 var PlaylistItemComponent = React.createClass({
 	propTypes: {
@@ -30,4 +31,4 @@ var PlaylistItemComponent = React.createClass({
 	}
 });
 
-window.PlaylistItemComponent = PlaylistItemComponent;
+module.exports = PlaylistItemComponent;

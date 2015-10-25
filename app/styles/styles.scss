@@ -1,0 +1,287 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: black;
+    color: white;
+    overflow: hidden;
+}
+
+#bunnies-container {
+    width: 100%;
+    height: 100%;
+}
+canvas {
+    z-index: 0;
+}
+
+h3 {
+    margin: 0;
+    overflow: hidden;
+}
+
+#init {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+#init > h3 {
+    padding-top: 20px;
+}
+
+.init-button {
+    color: #555;
+    margin-left: 10px;
+}
+
+.init-button:hover {
+    color: #000;
+}
+
+#title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 50px;
+}
+#author {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    font-size: 20px
+}
+
+.active-video {
+    background: rgba(0, 170, 255, 0.54) !important;
+    position: relative;
+}
+.active-video-icon {
+    position: absolute;
+    z-index: 1;
+    font-size: 50px;
+    top: 16px;
+    left: 33px;
+}
+
+#main {
+    height: 100%;
+    width: 100%;
+}
+
+.site-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 100;
+}
+
+#join-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 210px;
+    width: 200px;
+    visibility: hidden;
+    text-align: center;
+}
+
+#qrcode canvas {
+    border: 2px solid white;
+}
+
+.slide-container {
+    height: 100%;
+    width: 1000px;
+    position: absolute;
+    right: -500px;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: right 250ms ease-in-out;
+}
+
+.slide-container.slide-left {
+    right: 0;
+}
+
+@media (min-width: 768px) {
+    .slide-container.slide-hidden {
+        right: -880px;
+    }
+}
+
+.slide-container .left, .slide-container .right {
+    height: 100%;
+    top: 0;
+    position: absolute;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.slide-container .left {
+    width: 50%;
+    border-right: 1px solid #333;
+}
+
+.slide-container .left h3 {
+    margin: 20px 0 10px 10px;
+}
+.playlist-container {
+    top: 152px;
+    bottom: 100px;
+    width: 100%;
+    overflow: scroll;
+    position: absolute;
+
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+.add-video-button {
+    border-radius: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 12px;
+    background: #0af;
+}
+
+.add-video-button i {
+    font-size: 20px;
+}
+
+.add-videos-container {
+    padding: 8px 0;
+    height: 100%;
+    position: relative;
+}
+
+.add-videos-container ul {
+    overflow: scroll;
+    position: absolute;
+    top: 54px;
+    bottom: 0;
+    width: 100%;
+    padding: 0 8px;
+}
+
+.add-videos-container input {
+    font-size: 18px;
+    padding: 18px 12px;
+    border-radius: 0;
+    width: calc(100% - 16px);
+    margin: auto;
+}
+
+.search-video-result {
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    background-position: 0;
+    padding: 70px 0;
+    list-style: none;
+    position: relative;
+}
+
+.search-video-result span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    padding: 22px 8px;
+    background: rgba(0, 0, 0, 0.6);
+    font-size: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.search-video-result button {
+    display: block;
+    position: absolute;
+    height: 50%;
+    left: 50%;
+    width: 50%;
+    background: #0af;
+    border: 0;
+}
+
+.search-video-result button.added {
+    background: #333;
+}
+
+.search-video-result i {
+    font-size: 16px;
+}
+
+.slide-container .right {
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.vote-button {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    top: 0;
+    width: 25%;
+    background: #333;
+    border: 0;
+}
+.vote-button.active {
+    background: #0af;
+}
+
+#queue-list li, #current-list li {
+    height: 90px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin: 0 0 10px 0;
+}
+
+#current-list li .video-likes {
+    display: none;
+}
+
+.video-pic {
+    height: 90px;
+    width: 120px;
+    background-color: black;
+    position: relative;
+}
+.video-title {
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 125px;
+    height: 80px;
+    width: 205px;
+    text-overflow: ellipsis;
+}
+.video-likes {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.add-videos-go-back {
+    display: none;
+}

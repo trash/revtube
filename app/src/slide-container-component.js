@@ -1,3 +1,6 @@
+var PlaylistComponent = require('./playlist-component'),
+	AddVideosComponent = require('./add-videos-component');
+
 var SlideContainerComponent = React.createClass({
 	propTypes: {
 		playlistId: React.PropTypes.string,
@@ -35,13 +38,13 @@ var SlideContainerComponent = React.createClass({
 				onMouseOver={ this.unhide }
 				onMouseOut={ this.hide }>
 				<div className="left">
-					<window.PlaylistComponent playlistId={ this.props.playlistId }/>
+					<PlaylistComponent playlistId={ this.props.playlistId }/>
 					<button className="btn add-video-button" onClick={ this.slideLeft }>
 						<i className={ 'glyphicon ' + (this.state.slideLeft ? 'glyphicon-chevron-right' : 'glyphicon-plus') }/>
 					</button>
 				</div>
 				<div className="right">
-					<window.AddVideosComponent playlistId={ this.props.playlistId }/>
+					<AddVideosComponent playlistId={ this.props.playlistId }/>
 				</div>
 			</div>
 		);
@@ -63,4 +66,4 @@ var SlideContainerComponent = React.createClass({
 	}
 });
 
-window.SlideContainerComponent = SlideContainerComponent;
+module.exports = SlideContainerComponent;

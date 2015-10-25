@@ -9,7 +9,7 @@ var SearchVideoResult = React.createClass({
 	},
 	render: function () {
 		var video = this.props.video,
-			videoIsAdded = video.id in window.addedVideos;
+			videoIsAdded = video.id in playlistService.addedVideos;
 		return (
 			<li className="search-video-result" style={ { 'backgroundImage': 'url(' + video.thumbnail + ')' } } key={ video.id }>
 				<span>{ video.title }</span>

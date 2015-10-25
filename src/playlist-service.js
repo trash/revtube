@@ -1,7 +1,10 @@
 var Playlist = Parse.Object.extend('Playlist'),
 	PlaylistItem = Parse.Object.extend('PlaylistItem');
 
-var PlaylistService = function () {};
+var PlaylistService = function () {
+	this.votedVideos = {};
+	this.addedVideos = {};
+};
 
 /**
  * Takes a video object from the youtube API
@@ -11,8 +14,9 @@ var PlaylistService = function () {};
  * @param {Object} video Object mapped from youtube api
  * @return {Object} The Parse object
  */
-PlaylistService.prototype.addVideo = function (video) {
+PlaylistService.prototype.addVideo = function (video, callback) {
 	var playlistItem = new PlaylistItem();
+	callback = callback || function(){};
 
 	playlistItem.set('videoId', video.id);
 	playlistItem.set('videoTitle', video.title);
@@ -22,9 +26,9 @@ PlaylistService.prototype.addVideo = function (video) {
 
 	playlistItem.save(null, {
 		success: function (playlistItem) {
-			addedVideos[playlistItem.get('videoId')] = true;
+			this.addedVideos[playlistItem.get('videoId')] = true;
 			events.emit('playlist-update');
-			this.fetchPlaylistItems();
+			callback();
 		}.bind(this),
 		error: function (playlistItem, error) {
 			// Execute any logic that should take place if the save fails.
@@ -36,7 +40,16 @@ PlaylistService.prototype.addVideo = function (video) {
 	return playlistItem;
 };
 
+/**
+ * Remove the video with given id from Parse
+ * Invokes the callback on success
+ *
+ * @param {String} id
+ * @param {Function} callback
+ */
 PlaylistService.prototype.removeVideo = function (id, callback) {
+	callback = callback || function(){};
+
 	// Get the video then destroy it on db
 	var query = new Parse.Query(PlaylistItem);
 	query.get(id, {
@@ -48,6 +61,28 @@ PlaylistService.prototype.removeVideo = function (id, callback) {
 				}
 			});
 		}
+	});
+};
+
+PlaylistService.prototype.voteVideo = function (video, callback) {
+	// Add vote if it's not already been voted on
+	var positiveVote = !(video.id in this.votedVideos),
+		query = new Parse.Query(PlaylistItem);
+	query.get(video.id, {
+		success: function (playlistItem) {
+			if (positiveVote) {
+				this.votedVideos[playlistItem.id] = true;
+			} else {
+				delete this.votedVideos[playlistItem.id];
+			}
+
+			var currentLikes = playlistItem.get('likes') || 0,
+				newLikes = currentLikes + (positiveVote ? 1 : -1);
+			playlistItem.set('likes', newLikes);
+			playlistItem.save();
+
+			callback(playlistItem.id, newLikes);
+		}.bind(this)
 	});
 };
 
@@ -77,6 +112,8 @@ PlaylistService.prototype.normalizeVideos = function (videos) {
  */
 PlaylistService.prototype.fetchPlaylistItems = function (playlistId, callback) {
 	console.log('fetch playlist');
+	callback = callback || function(){};
+
 	var playlistQuery = new Parse.Query(Playlist),
 		service = this;
 	playlistQuery.equalTo('code', playlistId);

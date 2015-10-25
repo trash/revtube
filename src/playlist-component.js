@@ -2,8 +2,8 @@ var Playlist = Parse.Object.extend('Playlist'),
 	PlaylistItem = Parse.Object.extend('PlaylistItem'),
 	PlaylistItemComponent = window.PlaylistItemComponent,
 	playlistService = window.playlistService,
-	addedVideos = window.tube.addedVideos,
-	votedVideos = window.tube.votedVideos;
+	addedVideos = playlistService.addedVideos,
+	votedVideos = playlistService.votedVideos;
 
 var PlaylistComponent = React.createClass({
 	propTypes: {
@@ -30,7 +30,9 @@ var PlaylistComponent = React.createClass({
 	},
 	addVideo: function (video) {
 		// Update server
-		var playlistItem = playlistService.addVideo(video);
+		var playlistItem = playlistService.addVideo(video, function () {
+			this.fetchPlaylistItems();
+		}.bind(this));
 
 		// Update the ui list of videos
 		var oldPlaylistItems = this.state.playlistItems;
@@ -73,25 +75,7 @@ var PlaylistComponent = React.createClass({
 	},
 	voteVideo: function (video) {
 		return function () {
-			// Add vote if it's not already been voted on
-			var positiveVote = !(video.id in votedVideos),
-				query = new Parse.Query(PlaylistItem);
-			query.get(video.id, {
-				success: function (playlistItem) {
-					if (positiveVote) {
-						votedVideos[playlistItem.id] = true;
-					} else {
-						delete votedVideos[playlistItem.id];
-					}
-
-					var currentLikes = playlistItem.get('likes') || 0,
-						newLikes = currentLikes + (positiveVote ? 1 : -1);
-					playlistItem.set('likes', newLikes);
-					playlistItem.save();
-
-					this.updatePlaylistItemLikes(playlistItem.id, newLikes);
-				}.bind(this)
-			});
+			playlistService.voteVideo(video, this.updatePlaylistItemLikes);
 		}.bind(this);
 	},
 	removeVideo: function (id) {

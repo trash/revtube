@@ -1,4 +1,4 @@
-var votedVideos = window.tube.votedVideos;
+var votedVideos = playlistService.votedVideos;
 
 var PlaylistItemComponent = React.createClass({
 	propTypes: {

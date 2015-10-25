@@ -3,7 +3,7 @@ Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCm
       window.initPlayer = function(videoId) {
         $('#video-container').tubular({
           videoId: videoId,
-          mute: false,
+          mute: window.location.toString().indexOf('mute=true') !== -1 ? true : false,
           repeat: false
         });
 

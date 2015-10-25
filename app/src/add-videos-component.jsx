@@ -1,5 +1,7 @@
+'use strict';
 var playlistService = require('./playlist-service'),
-	youtubeService = require('./youtube-service');
+	youtubeService = require('./youtube-service'),
+	events = require('./events');
 
 var SearchVideoResult = React.createClass({
 	propTypes: {

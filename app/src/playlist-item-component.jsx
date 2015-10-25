@@ -1,3 +1,4 @@
+'use strict';
 var playlistService = require('./playlist-service'),
 	votedVideos = playlistService.votedVideos;
 

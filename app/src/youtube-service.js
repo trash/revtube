@@ -1,3 +1,4 @@
+'use strict';
 var YoutubeService = function () {};
 
 YoutubeService.prototype.searchForVideos = function (query, callback) {

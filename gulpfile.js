@@ -11,15 +11,13 @@ var gulp = require('gulp'),
 	reactify = require('reactify'),
 	source = require('vinyl-source-stream'),
 	buffer = require('vinyl-buffer'),
-	colors = require('colors'),
-	sass = require('gulp-ruby-sass');
+	colors = require('colors');
 
 var files = ['app/src/**/*.js', '!app/src/vendor/**/*'];
 
 gulp.task('sass', function () {
-	gulp.src('app/styles/**/*.scss')
-		.pipe(sass())
-		.pipe(gulp.dest('./.tmp/styles'));
+	return sass('./app/styles/**/*.scss')
+		.pipe(gulp.dest('./app/build/styles'));
 });
 
 var bundle = function (bundler, filename) {
@@ -47,11 +45,9 @@ bundler.on('log', console.log);
 
 gulp.task('watch', function() {
 	// watch scss files
-	gulp.watch('app/styles/**/*.scss', function() {
-		gulp.run('sass');
-	});
+	gulp.watch('app/styles/**/*.scss', ['sass']);
 
-	gulp.watch(files, ['jshint', 'circular-dependencies-check']);
+	gulp.watch(files, ['jshint']);
 });
  
 gulp.task('browserify', function() {

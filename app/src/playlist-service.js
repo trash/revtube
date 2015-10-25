@@ -1,5 +1,7 @@
+'use strict';
 var Playlist = Parse.Object.extend('Playlist'),
-	PlaylistItem = Parse.Object.extend('PlaylistItem');
+	PlaylistItem = Parse.Object.extend('PlaylistItem'),
+	events = require('./events');
 
 var PlaylistService = function () {
 	this.votedVideos = {};
@@ -48,9 +50,8 @@ PlaylistService.prototype.markAsCurrent = function (video) {
 			// This is a hacky way instead of keeping a pointer to current.
 			var currentLikes = playlistItem.get('likes') || 0,
 				extraLikesForCurrent = 1000,
-				newLikes = currentLikes < extraLikesForCurrent
-					? currentLikes + extraLikesForCurrent
-					: currentLikes;
+				newLikes = currentLikes < extraLikesForCurrent ?
+					currentLikes + extraLikesForCurrent : currentLikes;
 			playlistItem.set('likes', newLikes);
 			playlistItem.save();
 		}.bind(this)
@@ -124,11 +125,11 @@ PlaylistService.prototype.fetchPlaylistItems = function (playlistId, callback) {
 
 			var query = new Parse.Query(PlaylistItem);
 			query.equalTo('Playlist', playlist);
-			query.ascending("createdAt");
-			query.descending("likes");
+			query.ascending('createdAt');
+			query.descending('likes');
 			query.find({
 				success: function (playlistItems) {
-					console.log(playlistItems)
+					console.log(playlistItems);
 					callback(playlistItems);
 				},
 				error: function (object, error) {

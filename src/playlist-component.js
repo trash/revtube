@@ -46,22 +46,6 @@ var PlaylistComponent = React.createClass({
 			window.playNext();
 		}
 	},
-	markAsCurrent: function (video) {
-		var query = new Parse.Query(PlaylistItem);
-		query.get(video.id, {
-			success: function (playlistItem) {
-				// 1000 extra likes ensures we're keeping this item at the top of the list.
-				// This is a hacky way instead of keeping a pointer to current.
-				var currentLikes = playlistItem.get('likes') || 0,
-					extraLikesForCurrent = 1000,
-					newLikes = currentLikes < extraLikesForCurrent
-						? currentLikes + extraLikesForCurrent
-						: currentLikes;
-				playlistItem.set('likes', newLikes);
-				playlistItem.save();
-			}.bind(this)
-		});
-	},
 	updatePlaylistItemLikes: function (id, likes) {
 		// this is inefficient but eh im tired and lazy
 		var playlistItems = this.state.playlistItems,

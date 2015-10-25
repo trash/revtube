@@ -1,14 +1,16 @@
+var playlistService = window.playlistService;
+
 Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCmiKMmy0zRbYeMhGJ5YQFG6k');
 
-      window.initPlayer = function(videoId) {
-        $('#video-container').tubular({
-          videoId: videoId,
-          mute: window.location.toString().indexOf('mute=true') !== -1 ? true : false,
-          repeat: false
-        });
+window.initPlayer = function(videoId) {
+    $('#video-container').tubular({
+        videoId: videoId,
+        mute: window.location.toString().indexOf('mute=true') !== -1 ? true : false,
+        repeat: false
+    });
 
-        var oldOnPlayerReady = window.onPlayerReady;
-        window.onPlayerReady = function(e) {
+    var oldOnPlayerReady = window.onPlayerReady;
+    window.onPlayerReady = function(e) {
           oldOnPlayerReady(e);
 
         $(window).keypress(function(e) {
@@ -34,7 +36,7 @@ Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCm
         }
         // else if (window.player.B.playerState == 1) // playing
     }
-}
+};
 
 window.playNext = function() {
     console.log('play next ');
@@ -44,7 +46,7 @@ window.playNext = function() {
         return;
     }
     currentVideoId = currentVideo.get('videoId');
-    window.playlist.markAsCurrent(currentVideo);
+    playlistService.markAsCurrent(currentVideo);
 
     // announce for 2 seconds
     window.readme("And now... " + currentVideo.get('videoTitle') + "!");

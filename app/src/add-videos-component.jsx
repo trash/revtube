@@ -1,3 +1,8 @@
+'use strict';
+var playlistService = require('./playlist-service'),
+	youtubeService = require('./youtube-service'),
+	events = require('./events');
+
 var SearchVideoResult = React.createClass({
 	propTypes: {
 		video: React.PropTypes.object.isRequired
@@ -7,7 +12,7 @@ var SearchVideoResult = React.createClass({
 	},
 	render: function () {
 		var video = this.props.video,
-			videoIsAdded = video.id in window.addedVideos;
+			videoIsAdded = video.id in playlistService.addedVideos;
 		return (
 			<li className="search-video-result" style={ { 'backgroundImage': 'url(' + video.thumbnail + ')' } } key={ video.id }>
 				<span>{ video.title }</span>
@@ -36,35 +41,12 @@ var AddVideosComponent = React.createClass({
 
 		this.queryYoutube();
 	},
-	queryYoutube: _.debounce(function () {
-		$.ajax({
-			type: 'get',
-			url: 'https://content.googleapis.com/youtube/v3/search',
-			data: {
-				part: 'snippet',
-				type: 'video',
-				q: this.state.searchValue,
-				key: 'AIzaSyBqf7fU8HgDmRG752sxL1eoff5rSJVIEKk',
-				maxResults: 10
-			},
-			success: function (response) {
-				console.log(response);
-				this.updateResults(response.items);
-			}.bind(this)
-		});
-	}, 250),
-	updateResults: function (videos) {
-		videos = videos.map(function (video) {
-			return {
-				id: video.id.videoId,
-				title: video.snippet.title,
-				description: video.snippet.description,
-				thumbnail: video.snippet.thumbnails.medium.url
-			};
-		});
-		this.setState({
-			searchResults: videos
-		});
+	queryYoutube: function () {
+		youtubeService.searchForVideos(this.state.searchValue, function (videos) {
+			this.setState({
+				searchResults: videos
+			});
+		}.bind(this));
 	},
 	addVideo: function (video) {
 		return function () {
@@ -78,6 +60,9 @@ var AddVideosComponent = React.createClass({
 		this.queryYoutube();
 	},
 	componentWillMount: function () {
+		// Instantiate reference to debounced query youtube function
+		this.debouncedQueryYoutube = _.debounce(this.queryYoutube, 250);
+
 		events.on('youtube-api-ready', function () {
 			this.setState({
 				disabled: false
@@ -109,4 +94,4 @@ var AddVideosComponent = React.createClass({
 	}
 });
 
-window.AddVideosComponent = AddVideosComponent;
+module.exports = AddVideosComponent;

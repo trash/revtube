@@ -1,14 +1,15 @@
-Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCmiKMmy0zRbYeMhGJ5YQFG6k');
+'use strict';
+var playlistService = require('./playlist-service');
 
-      window.initPlayer = function(videoId) {
-        $('#video-container').tubular({
-          videoId: videoId,
-          mute: false,
-          repeat: false
-        });
+window.initPlayer = function (videoId) {
+    $('#video-container').tubular({
+        videoId: videoId,
+        mute: window.location.toString().indexOf('mute=true') !== -1 ? true : false,
+        repeat: false
+    });
 
-        var oldOnPlayerReady = window.onPlayerReady;
-        window.onPlayerReady = function(e) {
+    var oldOnPlayerReady = window.onPlayerReady;
+    window.onPlayerReady = function(e) {
           oldOnPlayerReady(e);
 
         $(window).keypress(function(e) {
@@ -17,24 +18,26 @@ Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCm
                 if (e.target.nodeName === 'INPUT') {
                     return;
                 }
-                if (window.player.B.playerState == 1) // playing
+                if (window.player.B.playerState === 1) { // playing
                     window.player.pauseVideo();
-                else if (window.player.B.playerState == 2) // paused
+                }
+                else if (window.player.B.playerState === 2) { // paused
                     window.player.playVideo();
+                }
             }
         });
-    }
+    };
 
     var oldOnPlayerStateChange = window.onPlayerStateChange;
     window.onPlayerStateChange = function (event) {
         oldOnPlayerStateChange(event);
-        if (window.player.B.playerState == 0) { // stopped
+        if (window.player.B.playerState === 0) { // stopped
             var topVideo = window.playlist.getTopVideo();
             window.playlist.removeVideo(topVideo.id);
         }
         // else if (window.player.B.playerState == 1) // playing
-    }
-}
+    };
+};
 
 window.playNext = function() {
     console.log('play next ');
@@ -43,11 +46,11 @@ window.playNext = function() {
     if (!currentVideo) {
         return;
     }
-    currentVideoId = currentVideo.get('videoId');
-    window.playlist.markAsCurrent(currentVideo);
+    var currentVideoId = currentVideo.get('videoId');
+    playlistService.markAsCurrent(currentVideo);
 
     // announce for 2 seconds
-    window.readme("And now... " + currentVideo.get('videoTitle') + "!");
+    window.readme('And now... ' + currentVideo.get('videoTitle') + '!');
     setTimeout(function() {
         if (window.player === undefined) {
             window.initPlayer(currentVideoId);
@@ -57,7 +60,7 @@ window.playNext = function() {
             window.player.loadVideoById(currentVideoId);
         }
     }, 2000);
-}
+};
 
 // Skip video when they hit the right arrow key
 document.addEventListener('keyup', function (event) {

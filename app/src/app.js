@@ -1,3 +1,5 @@
+var MainComponent = require('./main-component.jsx');
+
 Parse.initialize('EmxeEeMgQxwUeC42hDPXfHK0tnKoTcLSL5OeZsuy', 'p8cryLkuriL0mTlWCmiKMmy0zRbYeMhGJ5YQFG6k');
 
 // Render the main react component on the dom

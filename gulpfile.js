@@ -85,4 +85,4 @@ gulp.task('jshint', function () {
 });
 
 gulp.task('default', ['sass', 'browserify-watchify', 'watch']);
-gulp.task('build', ['browserify-watchify']);
+gulp.task('build', ['browserify-watchify', 'sass']);
